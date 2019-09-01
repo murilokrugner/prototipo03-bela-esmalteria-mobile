@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 
 import Input from '~/components/Input';
 import Button from '~/components/Button';
-import { bold } from 'ansi-colors';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',

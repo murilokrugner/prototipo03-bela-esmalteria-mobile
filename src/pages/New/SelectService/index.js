@@ -8,14 +8,14 @@ import Background from '~/components/Background';
 
 import { Container, ServicesList, Services, Avatar, Name } from './styles';
 
-export default function SelectService() {
-  const [services, setServices] = useState([]);
+export default function SelectService({ navigation }) {
+  const [providers, setProviders] = useState([]);
 
   useEffect(() => {
     async function loadServices() {
-      const response = await api.get('providers');
+      const response = await api.get('/providers');
 
-      setServices(response.data);
+      setProviders(response.data);
     }
 
     loadServices();
@@ -25,12 +25,12 @@ export default function SelectService() {
     <Background>
       <Container>
         <ServicesList
-          data={services}
-          keyExtractor={service => String(service.id)}
-          renderItem={({ item: service }) => (
-            <Services>
+          data={providers}
+          keyExtractor={provider => String(provider.id)}
+          renderItem={({ item: provider }) => (
+            <Services onPress={() => navigation.navigate('SelectDateTime', { provider })}>
               <Avatar source={{uri: `http://api.adorable.io/avatar/50/avatar.png`}} />
-              <Name>{service.name}</Name>
+              <Name>{provider.name}</Name>
             </Services>
           )}
         />

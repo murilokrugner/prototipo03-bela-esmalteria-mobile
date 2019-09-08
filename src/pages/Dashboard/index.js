@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet } from 'react-native';
+//import { DotIndicator } from 'react-native-indicators';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
 
@@ -11,11 +13,13 @@ import { Container, Title, List } from './styles';
 
 function Dashboard({ isFocused }) {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function loadAppointments() {
     const response = await api.get('appointments');
 
     setAppointments(response.data);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -41,17 +45,21 @@ function Dashboard({ isFocused }) {
 
   return (
     <Background>
-      <Container>
-        <Title>Agendamentos</Title>
-
-        <List
-          data={appointments}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => (
-            <Appointment onCancel={() => handleCancel(item.id)} data={item} />
-          )}
-         />
+      { loading ? (
+            <ActivityIndicator size="large" color="#FFF" align="center"
+            style={styles.load}/>
+      ) : (
+        <Container>
+          <Title>Agendamentos</Title>
+            <List
+              data={appointments}
+              keyExtractor={item => String(item.id)}
+              renderItem={({ item }) => (
+                <Appointment onCancel={() => handleCancel(item.id)} data={item} />
+              )}
+            />
       </Container>
+      )}
     </Background>
   );
 }
@@ -62,3 +70,10 @@ Dashboard.navigationOptions = {
 }
 
 export default withNavigationFocus(Dashboard);
+
+const styles = StyleSheet.create({
+  load: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+})

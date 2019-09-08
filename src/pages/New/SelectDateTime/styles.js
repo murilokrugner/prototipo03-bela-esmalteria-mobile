@@ -13,18 +13,17 @@ export const HourList = styled.FlatList.attrs({
 `;
 
 export const Hour = styled(RectButton)`
-  background: #FFF;
+  background: #fff;
   border-radius: 4px;
   padding: 20px;
   flex: 1;
-  opacity: ${props => props.enabled ? 1 : 0.6};
-
+  opacity: ${props => (props.enabled ? 1 : 0.6)};
   align-items: center;
   margin: 0 10px 20px;
 `;
 
-export const Titl = styled.Text`
+export const Title = styled.Text`
+  color: #333;
   font-size: 14px;
   font-weight: bold;
-  color: #333;
-`
+`;

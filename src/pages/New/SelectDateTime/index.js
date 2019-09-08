@@ -20,7 +20,7 @@ export default function SelectDateTime({ navigation }) {
       const response = await api.get(`/providers/${provider.id}/available`, {
         params: {
           date: date.getTime(),
-        }
+        },
       });
 
       setHours(response.data);
@@ -29,30 +29,43 @@ export default function SelectDateTime({ navigation }) {
     loadAvailable();
   }, [date, provider.id]);
 
+  function handleSelectHour(time) {
+    navigation.navigate('Confirm', {
+      provider,
+      time,
+    });
+  }
+
   return (
     <Background>
       <Container>
-        <DateInput date={date} onChange={setDate}/>
+        <DateInput date={date} onChange={setDate} />
+        <HourList
+          data={hours}
+          extraData={date}
+          keyExtractor={item => item.time}
+          renderItem={({ item }) => (
+            <Hour
+            onPress={() => handleSelectHour(item.value)} enabled={item.available}
+           >
+              <Title>{item.time}</Title>
+            </Hour>
+          )}
+        />
       </Container>
-
-      <HourList
-        data={hours}
-        keyExtractor={item => item.time}
-        renderItem={({ item }) => (
-          <Hour onPress={() => {}} enabled={item.available}>
-            <Title>{item.time}</Title>
-          </Hour>
-        )}
-      />
     </Background>
   );
 }
 
-SelectDateTime.navigationOptions =({ navigation }) => ({
+SelectDateTime.navigationOptions = ({ navigation }) => ({
   title: 'Selecione o horário',
   headerLeft: () => (
-    <TouchableOpacity onPress={() => {navigation.goBack()}}>
-      <Icon name="chevron-left" size={20} color="#FFF" />
+    <TouchableOpacity
+      onPress={() => {
+        navigation.goBack();
+      }}
+    >
+      <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
 });

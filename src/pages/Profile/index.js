@@ -18,6 +18,7 @@ export default function Profile() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
+  const [avatar, setAvatar] = useState(profile.avatar.url)
   const [name, setName] = useState(profile.name);
   const [email, setEmail] = useState(profile.email);
   const [password, setPassword] = useState('');
@@ -50,7 +51,13 @@ export default function Profile() {
       <Container>
         <Title>Meu Perfil</Title>
         <Form>
-          <Avatar source={{uri: 'http://api.adorable.io/avatar/50/perfil.png'}} />
+        <Avatar
+          source={{
+            uri: avatar
+              ?  avatar.url
+              : `https://api.adorable.io/avatars/50/${state.provider.name}.png`,
+          }}
+        />
 
         <FormInput
             icon="person-outline"

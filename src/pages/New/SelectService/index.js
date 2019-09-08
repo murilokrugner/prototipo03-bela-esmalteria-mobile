@@ -29,7 +29,14 @@ export default function SelectService({ navigation }) {
           keyExtractor={provider => String(provider.id)}
           renderItem={({ item: provider }) => (
             <Services onPress={() => navigation.navigate('SelectDateTime', { provider })}>
-              <Avatar source={{uri: `http://api.adorable.io/avatar/50/avatar.png`}} />
+              <Avatar
+                source={{
+                  uri: provider.avatar
+                    ? provider.avatar.url
+                    : `https://api.adorable.io/avatars/50/${provider.name}.png`,
+                }}
+              />
+              />
               <Name>{provider.name}</Name>
             </Services>
           )}

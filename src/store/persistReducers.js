@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'belaschedule',
       storage,
-      whitelist: ['auth', 'user'],
+      whitelist: ['auth', 'user', 'password'],
     },
     reducers
   );

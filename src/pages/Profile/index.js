@@ -59,11 +59,7 @@ export default function Profile() {
           <Title>Meu Perfil</Title>
           <Form>
           <Avatar
-            source={{
-              uri: avatar
-                ?  avatar.url
-                : `https://api.adorable.io/avatars/50/${state.provider.name}.png`,
-            }}
+            source='https://api.adorable.io/avatars/50/teste.png'
           />
 
           <FormInput

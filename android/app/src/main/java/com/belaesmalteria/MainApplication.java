@@ -1,4 +1,4 @@
-package com.belamobile;
+package com.belaesmalteria;
 
 import android.app.Application;
 import android.util.Log;

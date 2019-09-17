@@ -25,7 +25,7 @@ export default function SignIn({ navigation }) {
   return (
     <Background>
       <Container>
-        <Image source={logo} style={{width: 200, height: 120}}/>
+        <Image source={logo} style={{width: 200, height: 200}}/>
 
         <Form>
           <FormInput
@@ -53,6 +53,10 @@ export default function SignIn({ navigation }) {
 
           <SubmitButton loading={loading} onPress={handleSubmit}>Acessar</SubmitButton>
         </Form>
+
+        <SignLink onPress={() => {navigation.navigate('Password')}}>
+          <SignLinkText>Esqueci minha senha</SignLinkText>
+        </SignLink>
 
         <SignLink onPress={() => {navigation.navigate('SignUp')}}>
           <SignLinkText>Criar conta gratuita</SignLinkText>

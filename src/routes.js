@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Password from './pages/Password';
 
 import SelectService from './pages/New/SelectService';
 import SelectDateTime from './pages/New/SelectDateTime';
@@ -18,6 +19,7 @@ export default (isSigned = false) => createAppContainer(
     Sign: createSwitchNavigator({
       SignIn,
       SignUp,
+      Password,
     }),
     App: createBottomTabNavigator({
       Dashboard,
@@ -52,7 +54,7 @@ export default (isSigned = false) => createAppContainer(
         activeTintColor: '#FFF',
         inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
         style: {
-          backgroundColor: '#c71585',
+          backgroundColor: '#48D1CC',
         }
       },
     })

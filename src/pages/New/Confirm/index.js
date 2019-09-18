@@ -12,6 +12,7 @@ import { Container, Avatar, Name, Time, SubmitButton } from './styles';
 
 export default function Confirm({ navigation }) {
   const provider = navigation.getParam('provider');
+  const service = navigation.getParam('service');
   const time = navigation.getParam('time');
 
   const dateFormatted = useMemo(
@@ -22,6 +23,7 @@ export default function Confirm({ navigation }) {
   async function handleAddAppointment() {
     await api.post('appointments', {
       provider_id: provider.id,
+      service_id: service.id,
       date: time,
     });
 
@@ -34,6 +36,8 @@ export default function Confirm({ navigation }) {
         <Avatar source={{uri: `http://api.adorable.io/avatar/50/avatar.png`}} />
 
         <Name>{provider.name}</Name>
+
+        <Name>{service.name}</Name>
 
         <Time>{dateFormatted}</Time>
 

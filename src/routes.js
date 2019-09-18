@@ -7,12 +7,14 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Password from './pages/Password';
 
+import SelectProvider from './pages/New/SelectProvider';
 import SelectService from './pages/New/SelectService';
 import SelectDateTime from './pages/New/SelectDateTime';
 import Confirm from './pages/New/Confirm';
 
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Feed from './pages/Feed';
 
 export default (isSigned = false) => createAppContainer(
   createSwitchNavigator({
@@ -25,6 +27,7 @@ export default (isSigned = false) => createAppContainer(
       Dashboard,
       New: {
         screen: createStackNavigator({
+          SelectProvider,
           SelectService,
           SelectDateTime,
           Confirm,
@@ -47,6 +50,7 @@ export default (isSigned = false) => createAppContainer(
         },
       },
       Profile,
+      Feed,
     },{
       resetOnBlur: true,
       tabBarOptions: {
@@ -55,7 +59,8 @@ export default (isSigned = false) => createAppContainer(
         inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
         style: {
           backgroundColor: '#48D1CC',
-        }
+          height: 50,
+        },
       },
     })
   }, {

@@ -9,19 +9,19 @@ import Background from '~/components/Background';
 
 import { Container, ProvidersList, Provider, Avatar, Name } from './styles';
 
-export default function SelectService({ navigation }) {
-  const [services, setServices] = useState([]);
+export default function SelectProvider({ navigation }) {
+  const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadServices() {
-      const response = await api.get('services');
+    async function loadProviders() {
+      const response = await api.get('providers');
 
-      setServices(response.data);
+      setProviders(response.data);
       setLoading(false);
     }
 
-    loadServices();
+    loadProviders();
   }, []);
 
   return (
@@ -32,20 +32,18 @@ export default function SelectService({ navigation }) {
       ) : (
         <Container>
           <ProvidersList
-            data={services}
-            keyExtractor={service => String(service.id)}
-            renderItem={({ item: service }) => (
+            data={providers}
+            keyExtractor={provider => String(provider.id)}
+            renderItem={({ item: provider }) => (
               <Provider
                 onPress={() =>
-                  navigation.navigate('SelectDateTime', { service })
+                  navigation.navigate('SelectService', { provider })
                 }
               >
                 <Avatar
                   source={{ uri: 'https://api.adorable.io/avatars/50/tst.png' }}
                 />
-                <Name>Tipo: {service.name}</Name>
-                <Name>preço: R$-{service.price},00</Name>
-                <Name>Duração: {service.duration} minutos</Name>
+                <Name>{provider.name}</Name>
               </Provider>
             )}
           />
@@ -55,12 +53,12 @@ export default function SelectService({ navigation }) {
   );
 }
 
-SelectService.navigationOptions = ({ navigation }) => ({
-  title: 'Selecione o serviço',
+SelectProvider.navigationOptions = ({ navigation }) => ({
+  title: 'Selecione a profissional',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('SelectProvider');
+        navigation.navigate('Dashboard');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

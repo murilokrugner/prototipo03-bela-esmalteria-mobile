@@ -12,10 +12,11 @@ import { Container, ProvidersList, Provider, Avatar, Name } from './styles';
 export default function SelectService({ navigation }) {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const provider = navigation.getParam('provider');
 
   useEffect(() => {
     async function loadServices() {
-      const response = await api.get('services');
+      const response = await api.get(`services?provider=${provider.id}`);
 
       setServices(response.data);
       setLoading(false);
@@ -37,12 +38,9 @@ export default function SelectService({ navigation }) {
             renderItem={({ item: service }) => (
               <Provider
                 onPress={() =>
-                  navigation.navigate('SelectDateTime', { service })
+                  navigation.navigate('SelectDateTime', { provider, service })
                 }
               >
-                <Avatar
-                  source={{ uri: 'https://api.adorable.io/avatars/50/tst.png' }}
-                />
                 <Name>Tipo: {service.name}</Name>
                 <Name>preço: R$-{service.price},00</Name>
                 <Name>Duração: {service.duration} minutos</Name>

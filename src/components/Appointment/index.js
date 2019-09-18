@@ -17,12 +17,15 @@ export default function Appointment({ data, onCancel }) {
   return (
     <Container past={data.past}>
       <Left>
-        <Avatar
-          source={{ uri: 'https://api.adorable.io/avatars/50/tst.png' }}
+      <Avatar
+          source={{
+            uri: data.provider.avatar
+              ? data.provider.avatar.url
+              : `https://api.adorable.io/avatars/50/${data.provider.name}.png`,
+          }}
         />
-
         <Info>
-          <Name>{data.provider.name}</Name>
+          <Name>Professional: {data.provider.name}</Name>
           <Time>{dateParsed}</Time>
         </Info>
       </Left>

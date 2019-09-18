@@ -41,7 +41,11 @@ export default function SelectProvider({ navigation }) {
                 }
               >
                 <Avatar
-                  source={{ uri: 'https://api.adorable.io/avatars/50/tst.png' }}
+                source={{
+                  uri: provider.avatar
+                    ? provider.avatar.url
+                    : `https://api.adorable.io/avatars/50/${provider.name}.png`,
+                }}
                 />
                 <Name>{provider.name}</Name>
               </Provider>
@@ -54,7 +58,7 @@ export default function SelectProvider({ navigation }) {
 }
 
 SelectProvider.navigationOptions = ({ navigation }) => ({
-  title: 'Selecione a profissional',
+  title: 'Selecione a professional',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {

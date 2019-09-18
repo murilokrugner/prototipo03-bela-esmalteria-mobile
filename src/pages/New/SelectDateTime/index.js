@@ -14,6 +14,7 @@ export default function SelectDateTime({ navigation }) {
   const [hours, setHours] = useState([]);
 
   const provider = navigation.getParam('provider');
+  const service = navigation.getParam('service');
 
   useEffect(() => {
     async function loadAvailable() {
@@ -32,6 +33,7 @@ export default function SelectDateTime({ navigation }) {
   function handleSelectHour(time) {
     navigation.navigate('Confirm', {
       provider,
+      service,
       time,
     });
   }

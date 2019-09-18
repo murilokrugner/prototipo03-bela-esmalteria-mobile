@@ -13,7 +13,11 @@ import SelectDateTime from './pages/New/SelectDateTime';
 import Confirm from './pages/New/Confirm';
 
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
+
+import Profile from './pages/Person/Profile';
+import ProfileEdit from './pages/Person/ProfileEdit';
+import About from './pages/Person/About';
+
 import Feed from './pages/Feed';
 
 export default (isSigned = false) => createAppContainer(
@@ -49,7 +53,29 @@ export default (isSigned = false) => createAppContainer(
           )
         },
       },
-      Profile,
+      Person: {
+        screen: createStackNavigator({
+          Profile,
+          ProfileEdit,
+          About,
+        }, {
+          defaultNavigationOptions: {
+            headerTransparent: true,
+            headerTintColor: '#FFF',
+            headerLeftContainerStyle: {
+              marginLeft: 20,
+            }
+          },
+        }),
+        navigationOptions: {
+          tabBarVisible: false,
+          tabBarLabel: 'Perfil',
+          tabBarIcon: (
+            <Icon name="add-circle-outline"
+            size={20} color="rgba(255, 255, 255, 0.6)" />
+          )
+        },
+      },
       Feed,
     },{
       resetOnBlur: true,

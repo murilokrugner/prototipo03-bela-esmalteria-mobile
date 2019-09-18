@@ -1,15 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { TouchableOpacity } from 'react-native';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '~/components/Background';
-import { signOut } from '~/store/modules/auth/actions';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container, Title, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
 
-export default function Profile() {
+export default function ProfileEdit({ navigation }) {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
@@ -45,10 +45,6 @@ export default function Profile() {
     );
   }
 
-  function handleLogout() {
-    dispatch(signOut());
-  }
-
   return (
     <Background>
       { loading ? (
@@ -56,11 +52,14 @@ export default function Profile() {
         style={styles.load}/>
       ) : (
         <Container>
-          <Title>Meu Perfil</Title>
           <Form>
           <Avatar
-            source={{ uri: 'https://api.adorable.io/avatars/50/tst.png' }}
-          />
+                source={{
+                  uri: profile.avatar
+                    ? profile.avatar.url
+                    : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+                }}
+                />
 
           <FormInput
               icon="person-outline"
@@ -125,7 +124,7 @@ export default function Profile() {
             />
 
           <SubmitButton onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
-          <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
+
           </Form>
       </Container>
       )}
@@ -134,10 +133,18 @@ export default function Profile() {
   );
 }
 
-Profile.navigationOptions = {
-  tabBarLabel: 'Meu Perfil',
-  tabBarIcon: ({ tintColor }) => <Icon name="person" size={20} color={tintColor}/>
-};
+ProfileEdit.navigationOptions = ({ navigation }) => ({
+  title: 'Edite seu perfil',
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Profile');
+      }}
+    >
+      <Icon name="chevron-left" size={20} color="#fff" />
+    </TouchableOpacity>
+  ),
+});
 
 const styles = StyleSheet.create({
   load: {

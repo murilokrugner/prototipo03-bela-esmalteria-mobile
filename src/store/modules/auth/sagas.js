@@ -16,10 +16,10 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    if (user.provider) {
+    /*if (user.provider) {
       Alert.alert('Erro no login', 'Falha na autenticação o usuário é um prestador de serviço');
       return;
-    }
+    }*/
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator, createBottomTabNavigator,
+createStackNavigator } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -14,18 +15,23 @@ import Confirm from './pages/New/Confirm';
 
 import Dashboard from './pages/Dashboard';
 
+import DashboardAdm from './pages/DashboardAdm';
+
 import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
 import About from './pages/Person/About';
 
 import Feed from './pages/Feed';
 
-export default (isSigned = false) => createAppContainer(
+export default (isSigned = false, provider) => createAppContainer(
   createSwitchNavigator({
     Sign: createSwitchNavigator({
       SignIn,
       SignUp,
       Password,
+    }),
+    Admin: createBottomTabNavigator({
+      DashboardAdm,
     }),
     App: createBottomTabNavigator({
       Dashboard,
@@ -90,6 +96,8 @@ export default (isSigned = false) => createAppContainer(
       },
     })
   }, {
-    initialRouteName: isSigned ? 'App' : 'Sign',
+    initialRouteName: isSigned || provider === true ? 'Admin' : 'Sign',
   })
 );
+
+

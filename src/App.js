@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 
 import createRouter from './routes';
 
-export default function App() {
+export default function App({ navigation }) {
   const signed = useSelector(state => state.auth.signed);
+  const provider = useSelector(state => state.user.provider)
 
-  const Routes = createRouter(signed);
+  const Routes = createRouter(signed, provider);
 
   return (
     <Routes />

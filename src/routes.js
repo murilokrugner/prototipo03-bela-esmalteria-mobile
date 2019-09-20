@@ -32,7 +32,17 @@ export default (isSigned = false, provider) => createAppContainer(
     }),
     Admin: createBottomTabNavigator({
       DashboardAdm,
-    }),
+      },{ resetOnBlur: true,
+          tabBarOptions: {
+          keyboardHidesTabBar: true,
+          activeTintColor: '#FFF',
+          inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+          style: {
+            backgroundColor: '#48D1CC',
+            height: 50,
+        }
+      },
+    },),
     App: createBottomTabNavigator({
       Dashboard,
       New: {

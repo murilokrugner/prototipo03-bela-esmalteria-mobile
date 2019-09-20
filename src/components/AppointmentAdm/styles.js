@@ -28,6 +28,7 @@ export const Avatar = styled.Image`
 
 export const Info = styled.View`
   margin-left: 15px;
+  color: ${props => (props.available ? '#999' : '#7159c1')};
 `;
 
 export const Name = styled.Text`

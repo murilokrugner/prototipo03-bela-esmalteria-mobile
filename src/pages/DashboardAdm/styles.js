@@ -1,20 +1,15 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
-  display: flex;
+  flex: 1;
 `;
 
-export const Info = styled.Text`
+export const Title = styled.Text`
   font-size: 20px;
-  color: #000;
+  color: #FFF;
   font-weight: bold;
   align-self: center;
-
-  max-width: 600px;
-  margin: 10px auto;
-  padding: 20px;
-  border-radius: 4px;
-  background: #fff;
+  margin-top: 30px;
 `;
 
 export const List = styled.FlatList.attrs({

@@ -15,10 +15,19 @@ export default function AppointmentAdm({ data }) {
   }, [data.date]);*/
 
   return (
-    <Container>
+    <Container past={data.past}>
       <Left>
-        <Info>
-          <Name>{data.hour.time}</Name>
+        <Info available={data.available}>
+          <Avatar
+            source={{
+            uri: data.appointment
+            ? data.appointment.user.avatar.url
+            : `https://api.adorable.io/avatars/50/${data.appointment ? data.appointment.user.name: 'null'}.png`,
+          }}
+          />
+          <Time>Horário: {data.time}</Time>
+          <Name>{data.appointment ? data.appointment.user.name : 'Status: disponível'}</Name>
+          <Name>{data.appointment ? data.appointment.service_id: 'sem serviço'}</Name>
         </Info>
       </Left>
     </Container>

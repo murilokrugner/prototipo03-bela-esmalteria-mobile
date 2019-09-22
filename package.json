@@ -21,6 +21,7 @@
     "react-native": "0.60.5",
     "react-native-code-push": "^5.7.0",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-image-picker": "^1.1.0",
     "react-native-indicators": "^0.13.0",
     "react-native-intl": "^1.0.0",
     "react-native-linear-gradient": "^2.5.6",

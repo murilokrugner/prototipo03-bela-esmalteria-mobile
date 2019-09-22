@@ -16,6 +16,10 @@ import Confirm from './pages/New/Confirm';
 import Dashboard from './pages/Dashboard';
 
 import DashboardAdm from './pages/DashboardAdm';
+import ProfileAdm from './pages/PersonAdm/ProfileAdm';
+import ProfileEditAdm from './pages/PersonAdm/ProfileEditAdm';
+import AboutAdm from './pages/PersonAdm/AboutAdm';
+import Users from './pages/PersonAdm/Users';
 
 import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
@@ -32,6 +36,31 @@ export default (isSigned = false, provider) => createAppContainer(
     }),
     Admin: createBottomTabNavigator({
       DashboardAdm,
+      Feed,
+      PersonAdm: {
+        screen: createStackNavigator({
+          ProfileAdm,
+          ProfileEditAdm,
+          AboutAdm,
+          Users,
+        }, {
+          defaultNavigationOptions: {
+            headerTransparent: true,
+            headerTintColor: '#FFF',
+            headerLeftContainerStyle: {
+              marginLeft: 20,
+            }
+          },
+        }),
+        navigationOptions: {
+          tabBarVisible: false,
+          tabBarLabel: 'Perfil',
+          tabBarIcon: (
+            <Icon name="add-circle-outline"
+            size={20} color="rgba(255, 255, 255, 0.6)" />
+          )
+        },
+      },
       },{ resetOnBlur: true,
           tabBarOptions: {
           keyboardHidesTabBar: true,

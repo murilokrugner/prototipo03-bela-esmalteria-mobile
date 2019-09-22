@@ -8,7 +8,7 @@ import Background from '~/components/Background';
 
 import { Container, Avatar, Title} from './styles';
 
-export default function About({ navigation }) {
+export default function AboutAdm({ navigation }) {
 
   return (
     <Background>
@@ -21,12 +21,12 @@ export default function About({ navigation }) {
   );
 }
 
-About.navigationOptions = ({ navigation }) => ({
+AboutAdm.navigationOptions = ({ navigation }) => ({
   title: 'Sobre',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Profile');
+        navigation.navigate('ProfileAdm');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

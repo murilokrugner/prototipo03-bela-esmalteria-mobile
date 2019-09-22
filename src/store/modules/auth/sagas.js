@@ -16,16 +16,11 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    /*if (user.provider) {
-      Alert.alert('Erro no login', 'Falha na autenticação o usuário é um prestador de serviço');
-      return;
-    }*/
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
 
-    //history.push('/dashboard');
   } catch (err) {
     Alert.alert('Falha na autenticação', 'Falha na autenticação verifique seus dados');
     yield put(signFailure());

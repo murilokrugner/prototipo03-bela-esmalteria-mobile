@@ -26,7 +26,7 @@ import AppointmentAdm from '~/components/AppointmentAdm';
 
 import { Container, Title, List } from './styles';
 
-const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+const range = [8, 9, 10, 12, 13, 14, 15, 16];
 
 function DashboardAdm() {
   const [date, setDate] = useState(new Date());
@@ -40,13 +40,9 @@ function DashboardAdm() {
 
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-      console.tron.log(date);
-
       const data = range.map(hour => {
         const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
         const compareDate = zonedTimeToUtc(checkDate, timezone);
-
-        console.tron.log(checkDate);
 
         return {
           time: `${hour}:00h`,

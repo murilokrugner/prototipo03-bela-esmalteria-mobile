@@ -1,11 +1,10 @@
 import styled from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.View`
   flex: 1;
 `;
 
-export const ProvidersList = styled.FlatList.attrs({
+export const UsersList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
   numColumns: 2,
 })`
@@ -13,7 +12,7 @@ export const ProvidersList = styled.FlatList.attrs({
   padding: 0 20px;
 `;
 
-export const Provider = styled(RectButton)`
+export const User = styled.View`
   flex: 1;
   background: #fff;
   border-radius: 4px;

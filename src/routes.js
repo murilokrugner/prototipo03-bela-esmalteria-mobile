@@ -16,7 +16,7 @@ import Confirm from './pages/New/Confirm';
 import Dashboard from './pages/Dashboard';
 
 import DashboardAdm from './pages/DashboardAdm';
-import ProfileAdm from './pages/PersonAdm/ProfileAdm';
+import Adm from './pages/PersonAdm/Adm';
 import ProfileEditAdm from './pages/PersonAdm/ProfileEditAdm';
 import AboutAdm from './pages/PersonAdm/AboutAdm';
 import Users from './pages/PersonAdm/Users';
@@ -27,7 +27,7 @@ import About from './pages/Person/About';
 
 import Feed from './pages/Feed';
 
-export default (isSigned = false, provider) => createAppContainer(
+export default (provider, signed ) => createAppContainer(
   createSwitchNavigator({
     Sign: createSwitchNavigator({
       SignIn,
@@ -39,7 +39,7 @@ export default (isSigned = false, provider) => createAppContainer(
       Feed,
       PersonAdm: {
         screen: createStackNavigator({
-          ProfileAdm,
+          Adm,
           ProfileEditAdm,
           AboutAdm,
           Users,
@@ -135,7 +135,8 @@ export default (isSigned = false, provider) => createAppContainer(
       },
     })
   }, {
-    initialRouteName: isSigned || provider === true ? 'Admin' : 'Sign',
+    initialRouteName: (provider === true && signed === true) ? 'Admin' :
+      (provider === false && signed === true) ? 'App' : 'Sign',
   })
 );
 

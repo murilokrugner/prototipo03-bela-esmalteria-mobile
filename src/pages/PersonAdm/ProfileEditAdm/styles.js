@@ -7,7 +7,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-export const Avatar = styled(Button)`
+export const Avatar = styled.Image`
   width: 100px;
   height: 100px;
   border-radius: 25px;

@@ -28,33 +28,52 @@ export default function ProfileEditAdm({ navigation }) {
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  handleChoosePhoto = () => {
-    const options = {
-      noData: true,
-    }
-    ImagePicker.launchImageLibrary(options, response => {
-      const data = response;
+  const [file, setFile] = useState(defaultValue && defaultValue.id);
+  const [preview, setPreview] = useState(defaultValue && defaultValue.url);
+
+  useEffect(() => {
+    async function handleSelectImage() {
+      ImagePicker.showImagePicker({
+        title: 'Selecionar Imagem',
+      }, upload => {
+        if (upload.error){
+          console.log('Error');
+        } else if (upload.didCancel) {
+          console.log('Used canceled');
+        } else {
+          const preview = {
+            uri: `data:image/jpeg;base64,${upload.data}`,
+          }
+
+          let prefix;
+          let ext;
+
+          if (upload.fileName) {
+            [prefix, ext] = upload.fileName.split('.')
+            ext = ext.toLowerCase() === 'heic' ? 'jpg' : ext;
+          } else {
+            prefix = new Date().getTime();
+            ext = 'jpg';
+          }
+
+          const image = {
+            uri: upload.uri,
+            type: upload.type,
+            name: `${prefix}.${ext}`
+          };
+          setOldPassword('');
+          setPassword('');
+          setConfirmPassword('');
+          setFile(image);
+          setPreview(preview);
+          setLoading(false);
+        }
+
     })
   }
 
-  useEffect(() => {
-    async function handleChoosePhoto() {
-      const options = {
-        noData: true,
-      }
-      ImagePicker.launchImageLibrary(options, response => {
-        if (response.uri) {
-          setAvatar(response);
-        }
-      })
-    }
 
-    setOldPassword('');
-    setPassword('');
-    setConfirmPassword('');
-    setLoading(false);
-
-    handleChoosePhoto();
+    handleSelectImage();
   }, [profile]);
 
   function handleSubmit() {
@@ -64,6 +83,7 @@ export default function ProfileEditAdm({ navigation }) {
         oldPassword,
         password,
         confirmPassword,
+        file,
       })
     );
   }
@@ -77,13 +97,13 @@ export default function ProfileEditAdm({ navigation }) {
         <Container>
           <Form>
           <Avatar
-                source={{
-                  uri: profile.avatar
-                    ? profile.avatar.url
-                    : `https://api.adorable.io/avatars/50/${profile.name}.png`,
-                }}
-                onPress={handleChoosePhoto}
-                />
+            source={{
+            uri: preview || profile.avatar
+            ? profile.avatar.url
+            : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+            }}
+            onPress={handleSelectImage}
+            />
 
           <FormInput
               icon="person-outline"
@@ -148,7 +168,6 @@ export default function ProfileEditAdm({ navigation }) {
             />
 
           <SubmitButton onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
-          <SubmitButton onPress={handleChoosePhoto}>Atualizar Foto</SubmitButton>
 
           </Form>
       </Container>
@@ -163,7 +182,7 @@ ProfileEditAdm.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('ProfileAdm');
+        navigation.navigate('Adm');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

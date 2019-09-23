@@ -9,7 +9,7 @@ import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Avatar,  Form, SubmitButton, LogoutButton, AboutButton, UsersButton } from './styles';
 
-export default function ProfileAdm({ navigation }) {
+export default function Adm({ navigation }) {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
@@ -61,12 +61,12 @@ export default function ProfileAdm({ navigation }) {
   );
 }
 
-ProfileAdm.navigationOptions = ({ navigation }) => ({
+Adm.navigationOptions = ({ navigation }) => ({
   title: 'Meu Perfil',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Dashboard');
+        navigation.navigate('DashboardAdm');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

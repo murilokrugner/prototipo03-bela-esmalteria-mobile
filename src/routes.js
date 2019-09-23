@@ -16,7 +16,7 @@ import Confirm from './pages/New/Confirm';
 import Dashboard from './pages/Dashboard';
 
 import DashboardAdm from './pages/DashboardAdm';
-import Adm from './pages/PersonAdm/Adm';
+import ProfileAdm from './pages/PersonAdm/ProfileAdm';
 import ProfileEditAdm from './pages/PersonAdm/ProfileEditAdm';
 import AboutAdm from './pages/PersonAdm/AboutAdm';
 import Users from './pages/PersonAdm/Users';
@@ -39,7 +39,7 @@ export default (provider, signed ) => createAppContainer(
       Feed,
       PersonAdm: {
         screen: createStackNavigator({
-          Adm,
+          ProfileAdm,
           ProfileEditAdm,
           AboutAdm,
           Users,

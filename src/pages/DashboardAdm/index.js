@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import api from '~/services/api';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
@@ -31,6 +32,7 @@ const range = [8, 9, 10, 12, 13, 14, 15, 16];
 function DashboardAdm() {
   const [date, setDate] = useState(new Date());
   const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadSchedule() {
@@ -54,6 +56,7 @@ function DashboardAdm() {
       });
 
       setSchedule(data);
+      setLoading(false);
     }
 
     loadSchedule();
@@ -61,17 +64,21 @@ function DashboardAdm() {
 
   return (
     <Background>
-        <Title>Agendamentos</Title>
-        <DateInput date={date} onChange={setDate} />
-      <Container>
-            <List
-              data={schedule}
-              keyExtractor={item  => item.time}
-              renderItem={({ item }) => (
-                <AppointmentAdm data={item} past={item.past} available={!item.appointment}/>
-              )}
+      { loading ? (
+        <ActivityIndicator color="#FFF" size="large" style={styles.load}/>
+      ): (
+        <Container>
+          <Title>Agendamentos</Title>
+          <DateInput date={date} onChange={setDate} />
+          <List
+            data={schedule}
+            keyExtractor={item  => item.time}
+            renderItem={({ item }) => (
+            <AppointmentAdm data={item} past={item.past} available={!item.appointment}/>
+            )}
             />
-      </Container>
+        </Container>
+      )}
     </Background>
   );
 }
@@ -83,3 +90,9 @@ DashboardAdm.navigationOptions = {
 
 export default withNavigationFocus(DashboardAdm);
 
+const styles = StyleSheet.create({
+  load: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+})

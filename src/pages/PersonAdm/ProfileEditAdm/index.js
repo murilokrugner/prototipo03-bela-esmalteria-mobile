@@ -3,19 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ImagePicker from 'react-native-image-picker';
 
 import Background from '~/components/Background';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
-import { Container, Avatar, Separator, Form, FormInput, SubmitButton } from './styles';
-
+import { Container, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
 
 export default function ProfileEditAdm({ navigation }) {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
   const emailRef = useRef();
+  const nameRef = useRef();
   const oldPasswordRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -28,52 +27,11 @@ export default function ProfileEditAdm({ navigation }) {
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [file, setFile] = useState(defaultValue && defaultValue.id);
-  const [preview, setPreview] = useState(defaultValue && defaultValue.url);
-
   useEffect(() => {
-    async function handleSelectImage() {
-      ImagePicker.showImagePicker({
-        title: 'Selecionar Imagem',
-      }, upload => {
-        if (upload.error){
-          console.log('Error');
-        } else if (upload.didCancel) {
-          console.log('Used canceled');
-        } else {
-          const preview = {
-            uri: `data:image/jpeg;base64,${upload.data}`,
-          }
-
-          let prefix;
-          let ext;
-
-          if (upload.fileName) {
-            [prefix, ext] = upload.fileName.split('.')
-            ext = ext.toLowerCase() === 'heic' ? 'jpg' : ext;
-          } else {
-            prefix = new Date().getTime();
-            ext = 'jpg';
-          }
-
-          const image = {
-            uri: upload.uri,
-            type: upload.type,
-            name: `${prefix}.${ext}`
-          };
-          setOldPassword('');
-          setPassword('');
-          setConfirmPassword('');
-          setFile(image);
-          setPreview(preview);
-          setLoading(false);
-        }
-
-    })
-  }
-
-
-    handleSelectImage();
+    setOldPassword('');
+    setPassword('');
+    setConfirmPassword('');
+    setLoading(false);
   }, [profile]);
 
   function handleSubmit() {
@@ -83,7 +41,6 @@ export default function ProfileEditAdm({ navigation }) {
         oldPassword,
         password,
         confirmPassword,
-        file,
       })
     );
   }
@@ -97,13 +54,12 @@ export default function ProfileEditAdm({ navigation }) {
         <Container>
           <Form>
           <Avatar
-            source={{
-            uri: preview || profile.avatar
-            ? profile.avatar.url
-            : `https://api.adorable.io/avatars/50/${profile.name}.png`,
-            }}
-            onPress={handleSelectImage}
-            />
+                source={{
+                  uri: profile.avatar
+                    ? profile.avatar.url
+                    : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+                }}
+                />
 
           <FormInput
               icon="person-outline"
@@ -182,7 +138,7 @@ ProfileEditAdm.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Adm');
+        navigation.navigate('ProfileAdm');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

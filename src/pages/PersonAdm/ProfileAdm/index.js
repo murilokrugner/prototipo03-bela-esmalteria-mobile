@@ -41,11 +41,11 @@ export default function Adm({ navigation }) {
                 />
 
           <SubmitButton onPress={() =>
-            navigation.navigate('ProfileEdit')
+            navigation.navigate('ProfileEditAdm')
             }>Atualizar Perfil</SubmitButton>
 
           <AboutButton onPress={() =>
-            navigation.navigate('About')
+            navigation.navigate('AboutAdm')
             }>Sobre</AboutButton>
 
           <UsersButton onPress={() =>

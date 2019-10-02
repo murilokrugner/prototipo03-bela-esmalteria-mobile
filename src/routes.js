@@ -16,6 +16,7 @@ import Confirm from './pages/New/Confirm';
 import Dashboard from './pages/Dashboard';
 
 import DashboardAdm from './pages/DashboardAdm';
+
 import ProfileAdm from './pages/PersonAdm/ProfileAdm';
 import ProfileEditAdm from './pages/PersonAdm/ProfileEditAdm';
 import AboutAdm from './pages/PersonAdm/AboutAdm';
@@ -24,6 +25,11 @@ import Users from './pages/PersonAdm/Users';
 import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
 import About from './pages/Person/About';
+
+import SelectUserAdm from './pages/NewAdm/SelectUserAdm';
+import SelectServiceAdm from './pages/NewAdm/SelectServiceAdm';
+import SelectDateTimeAdm from './pages/NewAdm/SelectDateTimeAdm';
+import ConfirmAdm from './pages/NewAdm/ConfirmAdm';
 
 import Feed from './pages/Feed';
 
@@ -36,6 +42,30 @@ export default (provider, signed ) => createAppContainer(
     }),
     Admin: createBottomTabNavigator({
       DashboardAdm,
+      NewAdm: {
+        screen: createStackNavigator({
+          SelectUserAdm,
+          SelectServiceAdm,
+          SelectDateTimeAdm,
+          ConfirmAdm,
+        }, {
+          defaultNavigationOptions: {
+            headerTransparent: true,
+            headerTintColor: '#FFF',
+            headerLeftContainerStyle: {
+              marginLeft: 20,
+            }
+          },
+        }),
+        navigationOptions: {
+          tabBarVisible: false,
+          tabBarLabel: 'Agendar Cliente',
+          tabBarIcon: (
+            <Icon name="add-circle-outline"
+            size={20} color="rgba(255, 255, 255, 0.6)" />
+          )
+        },
+      },
       Feed,
       PersonAdm: {
         screen: createStackNavigator({

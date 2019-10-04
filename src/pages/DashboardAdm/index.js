@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, ScrollView, RefreshControl, SafeAreaView } from 'react-native';
 import api from '~/services/api';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
@@ -29,10 +29,18 @@ import { Container, Title, List } from './styles';
 
 const range = [8, 9, 10, 12, 13, 14, 15, 16];
 
-function DashboardAdm() {
+function DashboardAdm({ isFocused }) {
+  const [appointments, setAppointments] = useState([]);
   const [date, setDate] = useState(new Date());
   const [schedule, setSchedule] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  }
 
   useEffect(() => {
     async function loadSchedule() {
@@ -59,8 +67,32 @@ function DashboardAdm() {
       setLoading(false);
     }
 
-    loadSchedule();
-  }, [date]);
+    if (isFocused) {
+      loadSchedule();
+    }
+  }, [date, isFocused]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+
+    wait(2000).then(() => setRefreshing(false));
+  }, [refreshing])
+
+  async function handleCancel(id) {
+    const response = await api.delete(`schedule/${id}`);
+
+    setAppointments(
+      appointments.map(appointment =>
+        appointment.id === id
+          ? {
+            ...appointment,
+            canceled_at: response.data.canceled_at,
+          }
+          : appointment
+      )
+    );
+  }
 
   return (
     <Background>
@@ -68,15 +100,21 @@ function DashboardAdm() {
         <ActivityIndicator color="#FFF" size="large" style={styles.load}/>
       ): (
         <Container>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
           <Title>Agendamentos</Title>
           <DateInput date={date} onChange={setDate} />
           <List
             data={schedule}
             keyExtractor={item  => item.time}
             renderItem={({ item }) => (
-            <AppointmentAdm data={item} past={item.past} available={!item.appointment}/>
+              <AppointmentAdm onCancel={() => handleCancel(item.appointment.id)} data={item} past={item.past} available={!item.appointment}/>
             )}
             />
+          </ScrollView>
         </Container>
       )}
     </Background>

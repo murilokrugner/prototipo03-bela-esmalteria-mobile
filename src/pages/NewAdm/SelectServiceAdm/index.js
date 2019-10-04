@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,10 +10,12 @@ import Background from '~/components/Background';
 
 import { Container, ProvidersList, Provider, Avatar, Name } from './styles';
 
-export default function SelectServiceAdm({ navigation, provider.id }) {
+export default function SelectServiceAdm({ navigation }) {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = navigation.getParam('user');
+
+  const provider = useSelector(state => state.user.profile);
 
   useEffect(() => {
     async function loadServices() {
@@ -23,7 +26,7 @@ export default function SelectServiceAdm({ navigation, provider.id }) {
     }
 
     loadServices();
-  }, []);
+  }, [provider.id]);
 
   return (
     <Background>
@@ -38,7 +41,7 @@ export default function SelectServiceAdm({ navigation, provider.id }) {
             renderItem={({ item: service }) => (
               <Provider
                 onPress={() =>
-                  navigation.navigate('SelectDateTime', { user, service })
+                  navigation.navigate('SelectDateTimeAdm', { user, service, provider })
                 }
               >
                 <Name>Tipo: {service.name}</Name>

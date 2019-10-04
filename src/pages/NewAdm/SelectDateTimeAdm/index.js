@@ -14,6 +14,7 @@ export default function SelectDateTimeAdm({ navigation }) {
   const [hours, setHours] = useState([]);
 
   const provider = navigation.getParam('provider');
+  const user = navigation.getParam('user');
   const service = navigation.getParam('service');
 
   useEffect(() => {
@@ -31,8 +32,9 @@ export default function SelectDateTimeAdm({ navigation }) {
   }, [date, provider.id]);
 
   function handleSelectHour(time) {
-    navigation.navigate('Confirm', {
+    navigation.navigate('ConfirmAdm', {
       provider,
+      user,
       service,
       time,
     });

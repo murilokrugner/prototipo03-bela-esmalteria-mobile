@@ -12,6 +12,7 @@ import { Container, Avatar, Name, Time, SubmitButton } from './styles';
 
 export default function ConfirmAdm({ navigation }) {
   const provider = navigation.getParam('provider');
+  const user = navigation.getParam('user');
   const service = navigation.getParam('service');
   const time = navigation.getParam('time');
 
@@ -21,13 +22,14 @@ export default function ConfirmAdm({ navigation }) {
   );
 
   async function handleAddAppointment() {
-    await api.post('appointments', {
+    await api.post('appointmentsadm', {
       provider_id: provider.id,
+      user_id: user.id,
       service_id: service.id,
       date: time,
     });
 
-    navigation.navigate('Dashboard');
+    navigation.navigate('DashboardAdm');
   }
 
   return (
@@ -35,19 +37,19 @@ export default function ConfirmAdm({ navigation }) {
       <Container>
         <Avatar
           source={{
-          uri: provider.avatar
-          ? provider.avatar.url
-          : `https://api.adorable.io/avatars/50/${provider.name}.png`,
+          uri: user.avatar
+          ? user.avatar.url
+          : `https://api.adorable.io/avatars/50/${user.name}.png`,
           }}
           />
 
-        <Name>{provider.name}</Name>
+        <Name>{user.name}</Name>
 
         <Name>{service.name}</Name>
 
         <Time>{dateFormatted}</Time>
 
-        <SubmitButton onPress={handleAddAppointment}>Confirmar agendamento</SubmitButton>
+        <SubmitButton onPress={handleAddAppointment}>Confirmar agendamento para a cliente</SubmitButton>
       </Container>
     </Background>
   );

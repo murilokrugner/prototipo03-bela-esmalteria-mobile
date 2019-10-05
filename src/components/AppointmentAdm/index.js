@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Swipeout from 'react-native-swipeout';
-import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
+//import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Container, Left, Avatar, Info, Name, Time } from './styles';
+import { Container, Left, Avatar, Info, Name, Time, Content } from './styles';
 
 export default function AppointmentAdm({ data, onCancel }) {
   /*const dateParsed = useMemo(() => {
@@ -18,8 +18,8 @@ export default function AppointmentAdm({ data, onCancel }) {
 
 
   return (
-    <Swipeout
-      right={[{text: 'Delete', type: 'delete'}]} onPress={onCancel} disabled={(data.appointment && data.appointment) ? false : true}>
+    /**<Swipeout
+      right={[{text: 'Delete', type: 'delete'}]} onPress={onCancel} disabled={(data.appointment && data.appointment) ? false : true}>**/
       <Container past={data.past}>
       <Left>
         <Info available={data.available}>
@@ -27,16 +27,18 @@ export default function AppointmentAdm({ data, onCancel }) {
             source={{
             uri: data.appointment
             ? data.appointment.user.avatar.url
-            : `https://api.adorable.io/avatars/50/${data.appointment ? data.appointment.user.name: 'null'}.png`,
+            : `https://api.adorable.io/avatars/60/${data.appointment ? data.appointment.user.name: 'null'}.png`,
           }}
           />
-          <Time>Horário: {data.time}</Time>
-          <Name>{data.appointment ? data.appointment.user.name : 'Status: Disponível para agendamento'}</Name>
-          <Name>{data.appointment ? data.appointment.service_id: ''}</Name>
+          <Content>
+            <Name>{data.appointment ? data.appointment.user.name : 'Disponível'}</Name>
+            <Time>Horário: {data.time}</Time>
+
+          </Content>
         </Info>
       </Left>
     </Container>
-    </Swipeout>
+    /**</Swipeout>*/
 
   );
 }
@@ -45,3 +47,5 @@ export default function AppointmentAdm({ data, onCancel }) {
           <TouchableOpacity >
           </TouchableOpacity>
         )} */
+
+        /*<Name>{data.appointment ? data.appointment.service_id: ''}</Name>*/

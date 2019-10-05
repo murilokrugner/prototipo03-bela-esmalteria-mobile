@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  margin-bottom: 15px;
-  padding: 20px;
-  border-radius: 4px;
+  margin-bottom: 5px;
+  padding: 15px;
   background: #fff;
 
   display: flex;
@@ -15,32 +14,38 @@ export const Container = styled.View`
 `;
 
 export const Left = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex: 1;
 `;
 
 export const Avatar = styled.Image`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 50px;
 `;
 
 export const Info = styled.View`
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+
   margin-left: 15px;
   color: ${props => (props.available ? '#999' : '#7159c1')};
 `;
 
 export const Name = styled.Text`
   font-weight: bold;
-  font-size: 15px;
-  color: #333;
+  margin-top: 10px;
+  font-size: 17px;
+  color: #f08080;
 `;
 
 export const Time = styled.Text`
-  color: #999;
+  color: #ffa07a;
   font-size: 13px;
   margin-top: 4px;
+`;
+
+export const Content = styled.View`
+  flex: 1;
+  margin-left: 20px;
 `;

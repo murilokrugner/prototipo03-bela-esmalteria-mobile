@@ -5986,11 +5986,6 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-react-native-actionsheet@*:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.4.2.tgz#6a00dd51a75ef2c8974312130e405af73191500f"
-  integrity sha512-DBoWIvVwuWXuptF4t46pBqkFxaUxS+rsIdHiA05t0n4BdTIDV2R4s9bLEUVOGzb94D7VxIamsXZPA/3mmw+SXg==
-
 react-native-code-push@^5.7.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.7.0.tgz#38667c1ba5a5e1a6dd1b4271468c6ef6284b3ca4"
@@ -6057,16 +6052,7 @@ react-native-safe-area-view@^0.14.1:
   dependencies:
     debounce "^1.2.0"
 
-react-native-swipeout-longpressforandroid@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/react-native-swipeout-longpressforandroid/-/react-native-swipeout-longpressforandroid-1.0.10.tgz#154c2926b05a13cd0ca6cd5a022dcf6ba7faf1a1"
-  integrity sha512-jDNMrnpdEfrdhhz59o5zLetnEkoYyRsMJZ19wDFNVJ4EMuooZ2RdaPfHBIWDidQiXYv/COgNlE4Si/kjwDuBtw==
-  dependencies:
-    react-native "*"
-    react-native-actionsheet "*"
-    react-native-swipeout "*"
-
-react-native-swipeout@*, react-native-swipeout@^2.3.6:
+react-native-swipeout@^2.3.6:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/react-native-swipeout/-/react-native-swipeout-2.3.6.tgz#47dac8a835825cf3f2eef9e495574a3d9ab6d3fa"
   integrity sha512-t9suUCspzck4vp2pWggWe0frS/QOtX6yYCawHnEes75A7dZCEE74bxX2A1bQzGH9cUMjq6xsdfC94RbiDKIkJg==
@@ -6091,7 +6077,7 @@ react-native-vector-icons@^6.6.0:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
-react-native@*, react-native@0.61.2:
+react-native@0.61.2:
   version "0.61.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.2.tgz#987b91b063557f8ebec803fdfea2044a24bdbe4d"
   integrity sha512-hhd8bYbkkZYHoOndxUwbjJ6Yd9HFn5PvwqqS41uJ1xADdw44rx/svuwmJNA1RKF7jH74uR2jpBViWYGd36zGyg==

@@ -10,6 +10,8 @@ import './config/ReactotronConfig';
 
 import { store, persistor } from './store';
 
+console.disableYellowBox = true;
+
 class Index extends Component {
   constructor(props) {
     super(props);

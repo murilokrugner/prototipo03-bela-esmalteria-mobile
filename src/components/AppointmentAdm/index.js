@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import Swipeout from 'react-native-swipeout';
+import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -14,8 +16,11 @@ export default function AppointmentAdm({ data, onCancel }) {
     });
   }, [data.date]);*/
 
+
   return (
-    <Container past={data.past}>
+    <Swipeout
+      right={[{text: 'Delete', type: 'delete'}]} onPress={onCancel} disabled={(data.appointment && data.appointment) ? false : true}>
+      <Container past={data.past}>
       <Left>
         <Info available={data.available}>
           <Avatar
@@ -26,15 +31,17 @@ export default function AppointmentAdm({ data, onCancel }) {
           }}
           />
           <Time>Horário: {data.time}</Time>
-          <Name>{data.appointment ? data.appointment.user.name : 'Status: disponível'}</Name>
-          <Name>{data.appointment ? data.appointment.service_id: 'sem serviço'}</Name>
+          <Name>{data.appointment ? data.appointment.user.name : 'Status: Disponível para agendamento'}</Name>
+          <Name>{data.appointment ? data.appointment.service_id: ''}</Name>
         </Info>
       </Left>
-      {data.appointment && data.appointment && (
-          <TouchableOpacity onPress={onCancel}>
-            <Icon name="event-busy" size={20} color="#f64c75" />
-          </TouchableOpacity>
-        )}
     </Container>
+    </Swipeout>
+
   );
 }
+
+/**{data.appointment && data.appointment && (
+          <TouchableOpacity >
+          </TouchableOpacity>
+        )} */

@@ -21,12 +21,14 @@ export const Left = styled.View`
 `;
 
 export const Avatar = styled.Image`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
 `;
 
 export const Info = styled.View`
+  justify-content: center;
+  align-items: center;
   margin-left: 15px;
   color: ${props => (props.available ? '#999' : '#7159c1')};
 `;

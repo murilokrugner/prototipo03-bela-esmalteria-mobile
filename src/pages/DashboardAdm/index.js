@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, ScrollView, RefreshControl, SafeAreaView } from 'react-native';
+import { ActivityIndicator, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import api from '~/services/api';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
@@ -36,50 +36,38 @@ function DashboardAdm({ isFocused }) {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  async function wait(timeout) {
-    return new Promise(resolve => {
-      setTimeout(resolve, timeout);
+  async function loadSchedule() {
+    const response = await api.get('schedule', {
+      params: { date },
     });
+
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const data = range.map(hour => {
+      const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
+      const compareDate = zonedTimeToUtc(checkDate, timezone);
+
+      return {
+        time: `${hour}:00h`,
+        past: isBefore(compareDate, new Date()),
+        appointment: response.data.find(a =>
+          isEqual(parseISO(a.date), compareDate)
+        ),
+      };
+    });
+
+    setSchedule(data);
+    setLoading(false);
   }
 
   useEffect(() => {
-    async function loadSchedule() {
-      const response = await api.get('schedule', {
-        params: { date },
-      });
-
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-      const data = range.map(hour => {
-        const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
-        const compareDate = zonedTimeToUtc(checkDate, timezone);
-
-        return {
-          time: `${hour}:00h`,
-          past: isBefore(compareDate, new Date()),
-          appointment: response.data.find(a =>
-            isEqual(parseISO(a.date), compareDate)
-          ),
-        };
-      });
-
-      setSchedule(data);
-      setLoading(false);
-    }
-
     if (isFocused) {
       loadSchedule();
     }
   }, [date, isFocused]);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-
-
-    wait(2000).then(() => setRefreshing(false));
-  }, [refreshing])
-
-  async function handleCancel(id) {
+  async function handleCancel(id, name) {
+    setLoading(true);
     const response = await api.delete(`schedule/${id}`);
 
     setAppointments(
@@ -89,10 +77,26 @@ function DashboardAdm({ isFocused }) {
             ...appointment,
             canceled_at: response.data.canceled_at,
           }
-          : appointment
+          : appointment,
+          loadSchedule(),
+          setLoading(false),
+          alert(`O agendamento para ${name} foi cancelado`),
       )
     );
   }
+
+  function wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  }
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true),
+    loadSchedule(),
+
+    wait(2000).then(() => setRefreshing(false));
+  }, [refreshing]);
 
   return (
     <Background>
@@ -105,15 +109,15 @@ function DashboardAdm({ isFocused }) {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-          <Title>Agendamentos</Title>
-          <DateInput date={date} onChange={setDate} />
-          <List
-            data={schedule}
-            keyExtractor={item  => item.time}
-            renderItem={({ item }) => (
-              <AppointmentAdm onCancel={() => handleCancel(item.appointment.id)} data={item} past={item.past} available={!item.appointment}/>
-            )}
-            />
+            <Title>Agendamentos</Title>
+            <DateInput date={date} onChange={setDate} />
+            <List
+              data={schedule}
+              keyExtractor={item  => item.time}
+              renderItem={({ item }) => (
+                <AppointmentAdm onCancel={() => handleCancel((item.appointment.id), (item.appointment.user.name))} data={item} past={item.past} available={!item.appointment}/>
+              )}
+              />
           </ScrollView>
         </Container>
       )}

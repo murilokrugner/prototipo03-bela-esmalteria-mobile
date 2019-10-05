@@ -97,7 +97,7 @@ export default (provider, signed ) => createAppContainer(
           activeTintColor: '#FFF',
           inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
           style: {
-            backgroundColor: '#48D1CC',
+            backgroundColor: '#ffa07a',
             height: 50,
         }
       },
@@ -159,7 +159,7 @@ export default (provider, signed ) => createAppContainer(
         activeTintColor: '#FFF',
         inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
         style: {
-          backgroundColor: '#48D1CC',
+          backgroundColor: '#ffa07a',
           height: 50,
         },
       },

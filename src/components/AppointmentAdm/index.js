@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Swipeout from 'react-native-swipeout';
-//import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
-import { TouchableOpacity } from 'react-native';
+import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Left, Avatar, Info, Name, Time, Content } from './styles';
@@ -18,8 +18,8 @@ export default function AppointmentAdm({ data, onCancel }) {
 
 
   return (
-    /**<Swipeout
-      right={[{text: 'Delete', type: 'delete'}]} onPress={onCancel} disabled={(data.appointment && data.appointment) ? false : true}>**/
+    <Swipeout
+      style={styles.delete} right={[{text: 'Delete', type: 'delete'}]} onPress={onCancel} disabled={(data.appointment && data.appointment) ? false : true}>
       <Container past={data.past}>
       <Left>
         <Info available={data.available}>
@@ -38,10 +38,18 @@ export default function AppointmentAdm({ data, onCancel }) {
         </Info>
       </Left>
     </Container>
-    /**</Swipeout>*/
+  </Swipeout>
 
   );
 }
+
+const styles = StyleSheet.create({
+  delete: {
+    marginBottom: 0,
+  }
+})
+
+
 
 /**{data.appointment && data.appointment && (
           <TouchableOpacity >

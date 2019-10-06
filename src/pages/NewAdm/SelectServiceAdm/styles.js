@@ -31,6 +31,13 @@ export const Name = styled.Text`
   margin-top: 15px;
   font-size: 14px;
   font-weight: bold;
-  color: #333;
+  color: #f08080;
   align-items: center;
+`;
+
+export const Service = styled.View`
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+
 `;

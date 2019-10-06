@@ -135,6 +135,6 @@ export default withNavigationFocus(DashboardAdm);
 const styles = StyleSheet.create({
   load: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 })

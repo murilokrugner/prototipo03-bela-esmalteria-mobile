@@ -7,8 +7,6 @@ export default function App() {
   const signed = useSelector(state => state.auth.signed);
   const provider = useSelector(state => state.auth.provider);
 
-  console.tron.log(provider, signed);
-
   const Routes = createRouter(provider, signed);
 
   return (

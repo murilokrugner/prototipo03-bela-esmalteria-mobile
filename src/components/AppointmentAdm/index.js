@@ -7,6 +7,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Left, Avatar, Info, Name, Time, Content } from './styles';
+import { bold } from 'ansi-colors';
 
 export default function AppointmentAdm({ data, onCancel }) {
   /*const dateParsed = useMemo(() => {
@@ -16,10 +17,13 @@ export default function AppointmentAdm({ data, onCancel }) {
     });
   }, [data.date]);*/
 
+  console.tron.log(data.appointment);
+
 
   return (
     <Swipeout
-      style={styles.delete} right={[{text: 'Delete', type: 'delete'}]} onPress={onCancel} disabled={(data.appointment && data.appointment) ? false : true}>
+      style={styles.delete} right={[{text: 'Cancelar', type: 'delete'}]}
+        onPress={onCancel} disabled={(data.appointment && data.past === false) ? false : true}>
       <Container past={data.past}>
       <Left>
         <Info available={data.available}>
@@ -45,7 +49,10 @@ export default function AppointmentAdm({ data, onCancel }) {
 
 const styles = StyleSheet.create({
   delete: {
-    marginBottom: 0,
+    margin: 5,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+
   }
 })
 

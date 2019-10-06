@@ -44,13 +44,25 @@ export default function Adm({ navigation }) {
             navigation.navigate('ProfileEditAdm')
             }>Atualizar Perfil</SubmitButton>
 
-          <AboutButton onPress={() =>
-            navigation.navigate('AboutAdm')
-            }>Sobre</AboutButton>
-
           <UsersButton onPress={() =>
             navigation.navigate('Users')
             }>Todos os usuários</UsersButton>
+
+          <UsersButton onPress={() =>
+            navigation.navigate('')
+            }>Cadastrar um novo usuário</UsersButton>
+
+          <UsersButton onPress={() =>
+            navigation.navigate('')
+            }>Cadastrar um novo serviço</UsersButton>
+
+          <UsersButton onPress={() =>
+            navigation.navigate('')
+            }>Editar serviços cadastrados</UsersButton>
+
+          <AboutButton onPress={() =>
+            navigation.navigate('AboutAdm')
+            }>Sobre</AboutButton>
 
           <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
           </Form>

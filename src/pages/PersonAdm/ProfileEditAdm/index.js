@@ -2,12 +2,14 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { ActivityIndicator, StyleSheet } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '~/components/Background';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
+import api from '~/services/api';
 
 export default function ProfileEditAdm({ navigation }) {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ export default function ProfileEditAdm({ navigation }) {
   const [password, setPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [imageId, setImageId] = useState();
 
   useEffect(() => {
     setOldPassword('');
@@ -33,6 +36,51 @@ export default function ProfileEditAdm({ navigation }) {
     setConfirmPassword('');
     setLoading(false);
   }, [profile]);
+
+  function showImagePicker() {
+    ImagePicker.showImagePicker(
+      {
+        title: 'Selecionar imagem'
+      },
+      upload => {
+        if (upload.uri) {
+          const previewData = {
+            uri: `data:image/jpeg;base64,${upload.data}`,
+          };
+
+          let prefix;
+          let ext;
+
+          if (upload.fileName) {
+            [prefix, ext] = upload.fileName.split('.');
+            ext = ext.toLowerCase() === 'heic'? 'jpg' : ext;
+          } else {
+            prefix = new Date().getTime();
+            ext = 'jpg';
+          }
+
+          const imageData = {
+            uri: upload.uri,
+            type: upload.type,
+            name: `${prefix}.${ext}`,
+          };
+
+          setPreview(previewData);
+          handleUploadImage(imageData);
+        }
+      }
+    )
+  }
+
+  async function handleUploadImage(imageData) {
+    const data = new FormData();
+
+    data.append('images', imageData);
+
+    const response = await api.post('file', data);
+
+    setImageId(response.data);
+  }
 
   function handleSubmit() {
     dispatch(updateProfileRequest({

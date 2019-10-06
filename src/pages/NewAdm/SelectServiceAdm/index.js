@@ -8,7 +8,7 @@ import api from '~/services/api';
 
 import Background from '~/components/Background';
 
-import { Container, ProvidersList, Provider, Avatar, Name } from './styles';
+import { Container, ProvidersList, Provider, Avatar, Name, Service } from './styles';
 
 export default function SelectServiceAdm({ navigation }) {
   const [services, setServices] = useState([]);
@@ -44,9 +44,11 @@ export default function SelectServiceAdm({ navigation }) {
                   navigation.navigate('SelectDateTimeAdm', { user, service, provider })
                 }
               >
-                <Name>Tipo: {service.name}</Name>
-                <Name>preço: R$-{service.price},00</Name>
-                <Name>Duração: {service.duration} minutos</Name>
+                <Service>
+                  <Name>Tipo: {service.name}</Name>
+                  <Name>Preço: R$-{service.price},00</Name>
+                  <Name>Duração: {service.duration} min</Name>
+                </Service>
               </Provider>
             )}
           />

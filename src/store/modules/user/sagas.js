@@ -1,4 +1,5 @@
 import { Alert } from 'react-native';
+import Toast from 'react-native-easy-toast'
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 import api from '~/services/api';
 import { updateProfileSuccess, updateProfileFailure } from './actions';

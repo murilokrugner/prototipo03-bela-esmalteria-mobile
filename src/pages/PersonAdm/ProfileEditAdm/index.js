@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Background from '~/components/Background';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 
-import { Container, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
+import { Container, Image, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
 import api from '~/services/api';
 
 export default function ProfileEditAdm({ navigation }) {
@@ -21,14 +21,16 @@ export default function ProfileEditAdm({ navigation }) {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
+  const [loadingAvatar, setLoadingAvatar] = useState(false);
+  const [preview, setPreview] = useState();
+  const [image, setImage] = useState();
+
   const [loading, setLoading] = useState(true);
-  const [avatar, setAvatar] = useState(profile.avatar.url)
   const [name, setName] = useState(profile.name);
   const [email, setEmail] = useState(profile.email);
   const [password, setPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [imageId, setImageId] = useState();
 
   useEffect(() => {
     setOldPassword('');
@@ -40,7 +42,7 @@ export default function ProfileEditAdm({ navigation }) {
   function showImagePicker() {
     ImagePicker.showImagePicker(
       {
-        title: 'Selecionar imagem'
+        title: 'Selecione uma nova foto',
       },
       upload => {
         if (upload.uri) {
@@ -53,7 +55,7 @@ export default function ProfileEditAdm({ navigation }) {
 
           if (upload.fileName) {
             [prefix, ext] = upload.fileName.split('.');
-            ext = ext.toLowerCase() === 'heic'? 'jpg' : ext;
+            ext = ext.toLowerCase() === 'heic' ? 'jpg' : ext;
           } else {
             prefix = new Date().getTime();
             ext = 'jpg';
@@ -68,18 +70,33 @@ export default function ProfileEditAdm({ navigation }) {
           setPreview(previewData);
           handleUploadImage(imageData);
         }
-      }
-    )
+      },
+    );
   }
 
   async function handleUploadImage(imageData) {
+    setLoadingAvatar(true);
     const data = new FormData();
 
-    data.append('images', imageData);
+    data.append('file', imageData);
 
-    const response = await api.post('file', data);
+    const response = await api.post('files', data);
 
-    setImageId(response.data);
+    const { id, url } = response.data;
+
+    setImage(id);
+    setPreview(url);
+    handleImage(id);
+    setLoadingAvatar(false);
+
+  }
+
+  function handleImage(id) {
+    dispatch(updateProfileRequest({
+      name,
+      email,
+      avatar_id: id,
+    }))
   }
 
   function handleSubmit() {
@@ -89,6 +106,7 @@ export default function ProfileEditAdm({ navigation }) {
         oldPassword,
         password,
         confirmPassword,
+        //avatar_id: id,
       })
     );
   }
@@ -101,14 +119,23 @@ export default function ProfileEditAdm({ navigation }) {
       ) : (
         <Container>
           <Form>
-          <Avatar
-                source={{
-                  uri: profile.avatar
-                    ? profile.avatar.url
-                    : `https://api.adorable.io/avatars/50/${profile.name}.png`,
-                }}
-                />
-
+          <Image
+            onPress={showImagePicker}
+            >
+              Alterar foto
+          </Image>
+          { loadingAvatar ? (
+            <ActivityIndicator size="small" color="#fff" align="center"
+              style={styles.loadAvatar} />
+          ) : (
+            <Avatar
+              source={{
+              uri: profile.avatar
+              ? profile.avatar.url
+              : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+              }}
+            />
+          )}
           <FormInput
               icon="person-outline"
               autoCorrect={false}
@@ -199,4 +226,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
+
+  loadAvatar: {
+    flex: 1,
+    padding: 100,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  }
 })

@@ -15,12 +15,19 @@ export const Title = styled.Text`
   margin-top: 30px;
 `;
 
+export const Image = styled(Button)`
+  position: absolute;
+  margin-top: 170px;
+  margin-left: 155px;
+  background: transparent;
+`;
+
 export const Avatar = styled.Image`
   width: 100px;
   height: 100px;
   border-radius: 25px;
   align-self: center;
-  margin: 35px;
+  margin: 50px;
 `;
 
 export const Separator = styled.View`

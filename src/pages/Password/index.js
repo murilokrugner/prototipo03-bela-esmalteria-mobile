@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import logo from '~/assets/logo.png';
+import logo from '~/assets/logo.jpg';
 
 import Background from '~/components/Background';
 

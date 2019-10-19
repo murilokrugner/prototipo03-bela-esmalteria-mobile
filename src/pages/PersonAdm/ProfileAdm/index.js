@@ -64,6 +64,10 @@ export default function Adm({ navigation }) {
             navigation.navigate('AboutAdm')
             }>Sobre</AboutButton>
 
+          <AboutButton onPress={() =>
+            navigation.navigate('SelectImage')
+            }>Alterar imagem</AboutButton>
+
           <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
           </Form>
       </Container>

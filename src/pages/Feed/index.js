@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Title, Post, ListPost } from './styles';
 
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.jpg';
 //import more from '../../assets/more.png';
 //import like from '../../assets/like.png';
 //import comment from '../../assets/comment.png';

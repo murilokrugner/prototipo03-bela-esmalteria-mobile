@@ -21,6 +21,7 @@ import ProfileAdm from './pages/PersonAdm/ProfileAdm';
 import ProfileEditAdm from './pages/PersonAdm/ProfileEditAdm';
 import AboutAdm from './pages/PersonAdm/AboutAdm';
 import Users from './pages/PersonAdm/Users';
+import SelectImage from './pages/PersonAdm/SelectImage';
 
 import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
@@ -73,6 +74,7 @@ export default (provider, signed ) => createAppContainer(
           ProfileEditAdm,
           AboutAdm,
           Users,
+          SelectImage,
         }, {
           defaultNavigationOptions: {
             headerTransparent: true,

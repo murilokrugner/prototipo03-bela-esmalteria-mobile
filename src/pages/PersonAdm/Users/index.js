@@ -33,7 +33,7 @@ export default function Users() {
                 source={{
                   uri: user.avatar
                     ? user.avatar.url
-                    : `https://api.adorable.io/avatars/50/${provider.name}.png`,
+                    : `https://api.adorable.io/avatars/50/${user.name}.png`,
                 }}
                 />
               <Name>{user.name}</Name>

@@ -21,7 +21,10 @@ import ProfileAdm from './pages/PersonAdm/ProfileAdm';
 import ProfileEditAdm from './pages/PersonAdm/ProfileEditAdm';
 import AboutAdm from './pages/PersonAdm/AboutAdm';
 import Users from './pages/PersonAdm/Users';
-import SelectImage from './pages/PersonAdm/SelectImage';
+import CreateService from './pages/PersonAdm/CreateService';
+import CreateUser from './pages/PersonAdm/CreateUser';
+import SelectServiceEdit from './pages/PersonAdm/EditService/SelectServiceEdit';
+import EditingService from './pages/PersonAdm/EditService/EditingService';
 
 import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
@@ -74,7 +77,22 @@ export default (provider, signed ) => createAppContainer(
           ProfileEditAdm,
           AboutAdm,
           Users,
-          SelectImage,
+          CreateService,
+          CreateUser,
+          EditService: {
+            screen: createStackNavigator({
+              SelectServiceEdit,
+              EditingService,
+            }, {
+              defaultNavigationOptions: {
+                headerTransparent: true,
+                headerTintColor: '#FFF',
+                headerLeftContainerStyle: {
+                  marginLeft: 20,
+                }
+              },
+            },
+          )}
         }, {
           defaultNavigationOptions: {
             headerTransparent: true,

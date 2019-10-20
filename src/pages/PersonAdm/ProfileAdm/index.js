@@ -49,24 +49,20 @@ export default function Adm({ navigation }) {
             }>Todos os usuários</UsersButton>
 
           <UsersButton onPress={() =>
-            navigation.navigate('')
+            navigation.navigate('CreateUser')
             }>Cadastrar um novo usuário</UsersButton>
 
           <UsersButton onPress={() =>
-            navigation.navigate('')
+            navigation.navigate('CreateService')
             }>Cadastrar um novo serviço</UsersButton>
 
           <UsersButton onPress={() =>
-            navigation.navigate('')
+            navigation.navigate('SelectServiceEdit')
             }>Editar serviços cadastrados</UsersButton>
 
           <AboutButton onPress={() =>
             navigation.navigate('AboutAdm')
             }>Sobre</AboutButton>
-
-          <AboutButton onPress={() =>
-            navigation.navigate('SelectImage')
-            }>Alterar imagem</AboutButton>
 
           <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
           </Form>

@@ -33,6 +33,7 @@ function DashboardAdm({ isFocused }) {
   const [appointments, setAppointments] = useState([]);
   const [date, setDate] = useState(new Date());
   const [schedule, setSchedule] = useState([]);
+  const [service, setService] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -40,6 +41,10 @@ function DashboardAdm({ isFocused }) {
     const response = await api.get('schedule', {
       params: { date },
     });
+
+    const responseService = await api.get('schedule-service', {
+      params: { date },
+    })
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -57,6 +62,7 @@ function DashboardAdm({ isFocused }) {
     });
 
     setSchedule(data);
+    setService(responseService.data);
     setLoading(false);
   }
 

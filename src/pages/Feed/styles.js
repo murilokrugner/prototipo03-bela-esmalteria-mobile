@@ -1,9 +1,5 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  flex: 1;
-`;
-
 export const Title = styled.Text`
   font-size: 20px;
   color: #FFF;
@@ -12,11 +8,19 @@ export const Title = styled.Text`
   margin-top: 30px;
 `;
 
-export const Post = styled.FlatList.attrs({
+export const Container = styled.View`
+  flex: 1;
+`;
+
+/*export const ListPost = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 30 }
-})``;
+  contentContainerStyle: { padding: 1 }
+})``;*/
 
-export const ListPost = styled.Image`
+export const ListPost = styled.View``;
 
+export const Post = styled.View`
+  margin-top: 80px;
+  margin-left: 7px;
+  margin-right: 7px;
 `;

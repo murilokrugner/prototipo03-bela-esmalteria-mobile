@@ -3,7 +3,7 @@ import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Swipeout from 'react-native-swipeout';
 import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Left, Avatar, Info, Name, Time, Content } from './styles';
@@ -17,13 +17,16 @@ export default function AppointmentAdm({ data, onCancel }) {
     });
   }, [data.date]);*/
 
-  console.tron.log(data.appointment);
+  async function teste() {
+
+   console.tron.log('foi');
+  }
 
 
   return (
     <Swipeout
       style={styles.delete} right={[{text: 'Cancelar', type: 'delete'}]}
-        onPress={onCancel} disabled={(data.appointment && data.past === false) ? false : true}>
+      onPress={teste} disabled={(data.appointment && data.past === false) ? false : true}>
       <Container past={data.past}>
       <Left>
         <Info available={data.available}>

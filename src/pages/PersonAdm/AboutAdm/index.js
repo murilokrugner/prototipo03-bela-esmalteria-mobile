@@ -26,7 +26,7 @@ AboutAdm.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('ProfileAdm');
+        navigation.navigate('DashboardAdm');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Alert } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Background from '../../../../components/Background';
 import { Container, Header, HeaderName, Form, FormInput, SubmitButton } from './styles';
 import api from '../../../../services/api';
@@ -73,4 +76,16 @@ export default function EditingService({ navigation }) {
   );
 }
 
+
+EditingService.navigationOptions = ({ navigation }) => ({
+  title: 'Editar serviço',
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('SelectServiceEdit');
+      }}
+    >
+    </TouchableOpacity>
+  ),
+});
 

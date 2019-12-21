@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 //import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { useSelector } from 'react-redux';
 import Background from '../../../../components/Background';
 
@@ -43,4 +46,15 @@ export default function SelectServiceEdit({ navigation }) {
   );
 }
 
-
+SelectServiceEdit.navigationOptions = ({ navigation }) => ({
+  title: 'Editar serviço',
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('DashboardAdm');
+      }}
+    >
+      <Icon name="chevron-left" size={20} color="#fff" />
+    </TouchableOpacity>
+  ),
+});

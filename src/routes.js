@@ -1,6 +1,24 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator, createBottomTabNavigator,
-createStackNavigator } from 'react-navigation';
+
+import DrawerCustom from './components/DrawerCustom';
+
+import {
+  createAppContainer,
+  createSwitchNavigator
+} from 'react-navigation';
+
+import {
+  createStackNavigator
+} from 'react-navigation-stack';
+
+import {
+  createBottomTabNavigator
+} from 'react-navigation-tabs';
+
+import {
+  createDrawerNavigator
+} from 'react-navigation-drawer';
+
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -37,40 +55,57 @@ import ConfirmAdm from './pages/NewAdm/ConfirmAdm';
 
 import Feed from './pages/Feed';
 
-export default (provider, signed ) => createAppContainer(
+export default (provider, signed) => createAppContainer(
   createSwitchNavigator({
     Sign: createSwitchNavigator({
       SignIn,
       SignUp,
       Password,
     }),
-    Admin: createBottomTabNavigator({
-      DashboardAdm,
-      NewAdm: {
-        screen: createStackNavigator({
-          SelectUserAdm,
-          SelectServiceAdm,
-          SelectDateTimeAdm,
-          ConfirmAdm,
+    Admin: createDrawerNavigator({
+      Agendamentos: {
+        screen: createBottomTabNavigator({
+          DashboardAdm,
+          NewAdm: {
+            screen: createStackNavigator({
+              SelectUserAdm,
+              SelectServiceAdm,
+              SelectDateTimeAdm,
+              ConfirmAdm,
+            }, {
+              defaultNavigationOptions: {
+                headerTransparent: true,
+                headerTintColor: '#FFF',
+                headerLeftContainerStyle: {
+                  marginLeft: 20,
+                }
+              },
+            }),
+            navigationOptions: {
+              tabBarVisible: false,
+              tabBarLabel: 'Agendar Cliente',
+              tabBarIcon: ( <
+                Icon name = "add-circle-outline"
+                size = {
+                  20
+                }
+                color = "rgba(255, 255, 255, 0.6)" / >
+              )
+            },
+          },
         }, {
-          defaultNavigationOptions: {
-            headerTransparent: true,
-            headerTintColor: '#FFF',
-            headerLeftContainerStyle: {
-              marginLeft: 20,
+          resetOnBlur: true,
+          tabBarOptions: {
+            keyboardHidesTabBar: true,
+            activeTintColor: '#FFF',
+            inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+            style: {
+              backgroundColor: '#ffa07a',
+              height: 50,
             }
           },
-        }),
-        navigationOptions: {
-          tabBarVisible: false,
-          tabBarLabel: 'Agendar Cliente',
-          tabBarIcon: (
-            <Icon name="add-circle-outline"
-            size={20} color="rgba(255, 255, 255, 0.6)" />
-          )
-        },
+        }, ),
       },
-      Feed,
       PersonAdm: {
         screen: createStackNavigator({
           ProfileAdm,
@@ -101,27 +136,14 @@ export default (provider, signed ) => createAppContainer(
               marginLeft: 20,
             }
           },
-        }),
-        navigationOptions: {
-          tabBarVisible: false,
-          tabBarLabel: 'Perfil',
-          tabBarIcon: (
-            <Icon name="add-circle-outline"
-            size={20} color="rgba(255, 255, 255, 0.6)" />
-          )
-        },
-      },
-      },{ resetOnBlur: true,
-          tabBarOptions: {
-          keyboardHidesTabBar: true,
-          activeTintColor: '#FFF',
-          inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
-          style: {
-            backgroundColor: '#ffa07a',
-            height: 50,
-        }
-      },
-    },),
+        })},
+    }, {
+      drawerPosition: 'right',
+      drawerType: 'slide',
+      contentComponent: DrawerCustom,
+      drawerBackgroundColor: '#f08080',
+    },
+    ),
     App: createBottomTabNavigator({
       Dashboard,
       New: {
@@ -142,9 +164,12 @@ export default (provider, signed ) => createAppContainer(
         navigationOptions: {
           tabBarVisible: false,
           tabBarLabel: 'Agendar',
-          tabBarIcon: (
-            <Icon name="add-circle-outline"
-            size={20} color="rgba(255, 255, 255, 0.6)" />
+          tabBarIcon: ( <
+            Icon name = "add-circle-outline"
+            size = {
+              20
+            }
+            color = "rgba(255, 255, 255, 0.6)" / >
           )
         },
       },
@@ -165,14 +190,16 @@ export default (provider, signed ) => createAppContainer(
         navigationOptions: {
           tabBarVisible: false,
           tabBarLabel: 'Perfil',
-          tabBarIcon: (
-            <Icon name="add-circle-outline"
-            size={20} color="rgba(255, 255, 255, 0.6)" />
+          tabBarIcon: ( <
+            Icon name = "add-circle-outline"
+            size = {
+              20
+            }
+            color = "rgba(255, 255, 255, 0.6)" / >
           )
         },
       },
-      Feed,
-    },{
+    }, {
       resetOnBlur: true,
       tabBarOptions: {
         keyboardHidesTabBar: true,
@@ -185,9 +212,6 @@ export default (provider, signed ) => createAppContainer(
       },
     })
   }, {
-    initialRouteName: (provider === true && signed === true) ? 'Admin' :
-      (provider === false && signed === true) ? 'App' : 'Sign',
+    initialRouteName: (provider === true && signed === true) ? 'Admin' : (provider === false && signed === true) ? 'App' : 'Sign',
   })
 );
-
-

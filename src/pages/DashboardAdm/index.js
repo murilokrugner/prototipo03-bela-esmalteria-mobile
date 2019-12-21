@@ -1,35 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, ScrollView, RefreshControl } from 'react-native';
-import api from '~/services/api';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { withNavigationFocus } from 'react-navigation';
+import React, { useEffect, useState } from "react";
+import IconFA from 'react-native-vector-icons/FontAwesome';
 import {
-  format,
-  subHours,
-  addHours,
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+  SafeAreaView
+} from "react-native";
+import api from "~/services/api";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { withNavigationFocus } from "react-navigation";
+import {
   setHours,
   setMinutes,
   setSeconds,
   isBefore,
   isEqual,
-  parseISO,
-  isAfter,
-} from 'date-fns';
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
-
-import 'intl';
-import 'intl/locale-data/jsonp/pt';
-
-import Background from '~/components/Background';
-import DateInput from '~/components/DateInput';
-import AppointmentAdm from '~/components/AppointmentAdm';
+  parseISO
+} from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
+import Lottie from 'lottie-react-native';
 
 
-import { Container, Title, List } from './styles';
+import "intl";
+import "intl/locale-data/jsonp/pt";
+
+import Background from "~/components/Background";
+import DateInput from "~/components/DateInput";
+import AppointmentAdm from "~/components/AppointmentAdm";
+
+import { Menu, Container, Title, List } from "./styles";
+
+import Calendar from '~/assets/calendar.json';
+
 
 const range = [8, 9, 10, 12, 13, 14, 15, 16];
 
-function DashboardAdm({ isFocused }) {
+function DashboardAdm({ isFocused, navigation }) {
   const [appointments, setAppointments] = useState([]);
   const [date, setDate] = useState(new Date());
   const [schedule, setSchedule] = useState([]);
@@ -38,13 +46,13 @@ function DashboardAdm({ isFocused }) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function loadSchedule() {
-    const response = await api.get('schedule', {
-      params: { date },
+    const response = await api.get("schedule", {
+      params: { date }
     });
 
-    const responseService = await api.get('schedule-service', {
-      params: { date },
-    })
+    const responseService = await api.get("schedule-service", {
+      params: { date }
+    });
 
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -57,7 +65,7 @@ function DashboardAdm({ isFocused }) {
         past: isBefore(compareDate, new Date()),
         appointment: response.data.find(a =>
           isEqual(parseISO(a.date), compareDate)
-        ),
+        )
       };
     });
 
@@ -72,21 +80,27 @@ function DashboardAdm({ isFocused }) {
     }
   }, [date, isFocused]);
 
+  async function handleCancel() {
+    return Alert.alert('foi');
+  }
+
   async function handleCancel(id, name) {
+    return Alert.alert('Pedido Efetuado!');
     setLoading(true);
     const response = await api.delete(`schedule/${id}`);
 
     setAppointments(
-      appointments.map(appointment =>
-        appointment.id === id
-          ? {
-            ...appointment,
-            canceled_at: response.data.canceled_at,
-          }
-          : appointment,
-          loadSchedule(),
-          setLoading(false),
-          alert(`O agendamento para ${name} foi cancelado`),
+      appointments.map(
+        appointment =>
+          appointment.id === id
+            ? {
+                ...appointment,
+                canceled_at: response.data.canceled_at
+              }
+            : appointment,
+        loadSchedule(),
+        setLoading(false),
+        alert(`O agendamento para ${name} foi cancelado`)
       )
     );
   }
@@ -101,15 +115,32 @@ function DashboardAdm({ isFocused }) {
     setRefreshing(true),
     loadSchedule(),
 
-    wait(2000).then(() => setRefreshing(false));
+      wait(500).then(() => setRefreshing(false));
   }, [refreshing]);
 
   return (
     <Background>
-      { loading ? (
-        <ActivityIndicator color="#FFF" size="large" style={styles.load}/>
-      ): (
+      {loading ? (
+        <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Lottie resizeMode="contain" source={Calendar} autoPlay />
+      </SafeAreaView>
+      ) : (
         <Container>
+          <Menu>
+            <IconFA
+              style={{paddingRight: 20}}
+              onPress={() => navigation.openDrawer()}
+              name="bars"
+              color="#fff"
+              size={25}
+            />
+          </Menu>
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -119,11 +150,21 @@ function DashboardAdm({ isFocused }) {
             <DateInput date={date} onChange={setDate} />
             <List
               data={schedule}
-              keyExtractor={item  => item.time}
+              keyExtractor={item => item.time}
               renderItem={({ item }) => (
-                <AppointmentAdm onCancel={() => handleCancel((item.appointment.id), (item.appointment.user.name))} data={item} past={item.past} available={!item.appointment}/>
+                <AppointmentAdm
+                  onCancel={handleCancel
+                    /**handleCancel(
+                      item.appointment.id,
+                      item.appointment.user.name
+                    )**/
+                  }
+                  data={item}
+                  past={item.past}
+                  available={!item.appointment}
+                />
               )}
-              />
+            />
           </ScrollView>
         </Container>
       )}
@@ -132,15 +173,17 @@ function DashboardAdm({ isFocused }) {
 }
 
 DashboardAdm.navigationOptions = {
-  tabBarLabel: 'Agendamentos',
-  tabBarIcon: ({tintColor}) => <Icon name="event" size={20} color={tintColor}/>
-}
+  tabBarLabel: "Agendamentos",
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="event" size={20} color={tintColor} />
+  )
+};
 
 export default withNavigationFocus(DashboardAdm);
 
 const styles = StyleSheet.create({
   load: {
     flex: 1,
-    justifyContent: 'center',
-  },
-})
+    justifyContent: "center"
+  }
+});

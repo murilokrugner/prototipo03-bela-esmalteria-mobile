@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { CheckBox } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Background from '../../../components/Background';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpRequest } from '~/store/modules/auth/actions';
@@ -77,5 +80,19 @@ export default function CreateUser() {
     </Background>
   );
 }
+
+CreateUser.navigationOptions = ({ navigation }) => ({
+  title: 'Criar novo usuário',
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('DashboardAdm');
+      }}
+    >
+      <Icon name="chevron-left" size={20} color="#fff" />
+    </TouchableOpacity>
+  ),
+});
+
 
 

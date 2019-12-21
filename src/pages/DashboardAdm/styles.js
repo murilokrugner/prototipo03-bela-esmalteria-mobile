@@ -1,5 +1,11 @@
 import styled from 'styled-components/native';
 
+export const Menu = styled.View`
+  align-items: flex-end;
+  margin-right: 2px;
+  margin-top: 10px;
+`;
+
 export const Container = styled.SafeAreaView`
   flex: 1;
 `;

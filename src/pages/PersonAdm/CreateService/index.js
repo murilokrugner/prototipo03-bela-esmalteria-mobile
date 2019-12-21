@@ -1,4 +1,7 @@
 import React, { useRef, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { Alert } from 'react-native';
 import Background from '../../../components/Background';
 
@@ -71,3 +74,16 @@ export default function CreateService({ navigation }) {
     </Background>
   );
 }
+
+CreateService.navigationOptions = ({ navigation }) => ({
+  title: 'Criar novo serviço',
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('DashboardAdm');
+      }}
+    >
+      <Icon name="chevron-left" size={20} color="#fff" />
+    </TouchableOpacity>
+  ),
+});

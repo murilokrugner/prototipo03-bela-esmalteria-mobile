@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
+import {AnimatedLinearGradient, presetColors} from 'react-native-animated-linear-gradient';
+
 import { Provider } from 'react-redux';
 import CodePush from 'react-native-code-push';
 import OneSignal from 'react-native-onesignal';
@@ -35,11 +37,12 @@ class Index extends Component {
 
   onIds = (id) => {};
 
+
   render() {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <StatusBar barStyle="light-content" backgroundColor="#f08080" />
+            <StatusBar barStyle="light-content" backgroundColor={presetColors.instagram} speed={4000} />
           <App />
         </PersistGate>
       </Provider>

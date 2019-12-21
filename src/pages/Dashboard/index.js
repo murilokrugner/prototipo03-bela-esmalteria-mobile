@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, SafeAreaView } from 'react-native';
 //import { DotIndicator } from 'react-native-indicators';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
+import Lottie from 'lottie-react-native';
 
 import api from '~/services/api';
 
@@ -10,6 +11,8 @@ import Background from '~/components/Background';
 import Appointment from '~/components/Appointment';
 
 import { Container, Title, List } from './styles';
+
+import Calendar from '~/assets/calendar.json';
 
 function Dashboard({ isFocused }) {
   const [appointments, setAppointments] = useState([]);
@@ -46,8 +49,15 @@ function Dashboard({ isFocused }) {
   return (
     <Background>
       { loading ? (
-            <ActivityIndicator size="large" color="#FFF" align="center"
-            style={styles.load}/>
+            <SafeAreaView
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Lottie resizeMode="contain" source={Calendar} autoPlay />
+          </SafeAreaView>
       ) : (
         <Container>
           <Title>Agendamentos</Title>

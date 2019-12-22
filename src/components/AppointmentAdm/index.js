@@ -24,9 +24,6 @@ export default function AppointmentAdm({ data, onCancel }) {
 
 
   return (
-    <Swipeout
-      style={styles.delete} right={[{text: 'Cancelar', type: 'delete'}]}
-      onPress={teste} disabled={(data.appointment && data.past === false) ? false : true}>
       <Container past={data.past}>
       <Left>
         <Info available={data.available}>
@@ -34,36 +31,22 @@ export default function AppointmentAdm({ data, onCancel }) {
             source={{
             uri: data.appointment
             ? data.appointment.user.avatar.url
-            : `https://api.adorable.io/avatars/60/${data.appointment ? data.appointment.user.name: 'null'}.png`,
+            : `https://api.adorable.io/avatars/60/${data.appointment
+              ? data.appointment.user.name: 'null'}.png`,
           }}
           />
           <Content>
             <Name>{data.appointment ? data.appointment.user.name : 'Disponível'}</Name>
             <Time>Horário: {data.time}</Time>
-
           </Content>
         </Info>
       </Left>
-    </Container>
-  </Swipeout>
 
+      {data.appointment && data.appointment && (
+          <TouchableOpacity onPress={onCancel}>
+            <Icon name="event-busy" size={30} color="#f64c75" />
+          </TouchableOpacity>
+        )}
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  delete: {
-    margin: 5,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-
-  }
-})
-
-
-
-/**{data.appointment && data.appointment && (
-          <TouchableOpacity >
-          </TouchableOpacity>
-        )} */
-
-        /*<Name>{data.appointment ? data.appointment.service_id: ''}</Name>*/

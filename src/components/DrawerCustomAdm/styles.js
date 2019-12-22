@@ -6,7 +6,7 @@ export const DrawerContent = styled.View `
   flex-direction: column;
   height: 600px;
   width: 220px;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 export const Avatar = styled.Image`
@@ -40,6 +40,6 @@ export const AboutButton = styled(ButtonDrawer)`
 `;
 
 export const LogoutButton = styled(ButtonDrawer)`
-  margin-top: 50px;
+  margin-top: 10px;
   background: #FF142F;
 `;

@@ -34,7 +34,6 @@ import { Menu, Container, Title, List } from "./styles";
 
 import Calendar from '~/assets/calendar.json';
 
-
 const range = [8, 9, 10, 12, 13, 14, 15, 16];
 
 function DashboardAdm({ isFocused, navigation }) {
@@ -80,27 +79,18 @@ function DashboardAdm({ isFocused, navigation }) {
     }
   }, [date, isFocused]);
 
-  async function handleCancel() {
-    return Alert.alert('foi');
-  }
 
-  async function handleCancel(id, name) {
-    return Alert.alert('Pedido Efetuado!');
-    setLoading(true);
+  async function handleCancel(id) {
     const response = await api.delete(`schedule/${id}`);
 
     setAppointments(
-      appointments.map(
-        appointment =>
-          appointment.id === id
-            ? {
-                ...appointment,
-                canceled_at: response.data.canceled_at
-              }
-            : appointment,
-        loadSchedule(),
-        setLoading(false),
-        alert(`O agendamento para ${name} foi cancelado`)
+      appointments.map(appointment =>
+        appointment.id === id
+          ? {
+            ...appointment,
+            canceled_at: response.data.canceled_at,
+          }
+          : appointment
       )
     );
   }
@@ -152,19 +142,12 @@ function DashboardAdm({ isFocused, navigation }) {
               data={schedule}
               keyExtractor={item => item.time}
               renderItem={({ item }) => (
-                <AppointmentAdm
-                  onCancel={handleCancel
-                    /**handleCancel(
-                      item.appointment.id,
-                      item.appointment.user.name
-                    )**/
-                  }
-                  data={item}
-                  past={item.past}
-                  available={!item.appointment}
+                <AppointmentAdm onCancel={() =>
+                  handleCancel(item.appointment.id)}
+                  data={item} past={item.past}
+                  available={!item.appointment}/>
+                )}
                 />
-              )}
-            />
           </ScrollView>
         </Container>
       )}

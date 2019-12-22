@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DrawerCustomAdm from './components/DrawerCustomAdm';
 import DrawerCustom from './components/DrawerCustom';
 
 import {
@@ -140,42 +141,54 @@ export default (provider, signed) => createAppContainer(
     }, {
       drawerPosition: 'right',
       drawerType: 'slide',
-      contentComponent: DrawerCustom,
+      contentComponent: DrawerCustomAdm,
       drawerBackgroundColor: '#f08080',
     },
     ),
-    App: createBottomTabNavigator({
-      Dashboard,
-      New: {
-        screen: createStackNavigator({
-          SelectProvider,
-          SelectService,
-          SelectDateTime,
-          Confirm,
-        }, {
-          defaultNavigationOptions: {
-            headerTransparent: true,
-            headerTintColor: '#FFF',
-            headerLeftContainerStyle: {
-              marginLeft: 20,
-            }
+    App: createDrawerNavigator({
+      Client: createBottomTabNavigator({
+        Dashboard,
+        New: {
+          screen: createStackNavigator({
+            SelectProvider,
+            SelectService,
+            SelectDateTime,
+            Confirm,
+          }, {
+            defaultNavigationOptions: {
+              headerTransparent: true,
+              headerTintColor: '#FFF',
+              headerLeftContainerStyle: {
+                marginLeft: 20,
+              }
+            },
+          }),
+          navigationOptions: {
+            tabBarVisible: false,
+            tabBarLabel: 'Agendar',
+            tabBarIcon: ( <
+              Icon name = "add-circle-outline"
+              size = {
+                20
+              }
+              color = "rgba(255, 255, 255, 0.6)" / >
+            )
           },
-        }),
-        navigationOptions: {
-          tabBarVisible: false,
-          tabBarLabel: 'Agendar',
-          tabBarIcon: ( <
-            Icon name = "add-circle-outline"
-            size = {
-              20
-            }
-            color = "rgba(255, 255, 255, 0.6)" / >
-          )
         },
-      },
+      }, {
+        resetOnBlur: true,
+        tabBarOptions: {
+          keyboardHidesTabBar: true,
+          activeTintColor: '#FFF',
+          inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+          style: {
+            backgroundColor: '#ffa07a',
+            height: 50,
+          },
+        },
+      }),
       Person: {
         screen: createStackNavigator({
-          Profile,
           ProfileEdit,
           About,
         }, {
@@ -199,18 +212,14 @@ export default (provider, signed) => createAppContainer(
           )
         },
       },
-    }, {
-      resetOnBlur: true,
-      tabBarOptions: {
-        keyboardHidesTabBar: true,
-        activeTintColor: '#FFF',
-        inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
-        style: {
-          backgroundColor: '#ffa07a',
-          height: 50,
-        },
-      },
-    })
+    },
+    {
+      drawerPosition: 'right',
+      drawerType: 'slide',
+      contentComponent: DrawerCustom,
+      drawerBackgroundColor: '#f08080',
+    },
+    ),
   }, {
     initialRouteName: (provider === true && signed === true) ? 'Admin' : (provider === false && signed === true) ? 'App' : 'Sign',
   })

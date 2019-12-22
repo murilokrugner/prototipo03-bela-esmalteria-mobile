@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, SafeAreaView } from 'react-native';
 //import { DotIndicator } from 'react-native-indicators';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
 import Lottie from 'lottie-react-native';
@@ -10,11 +11,11 @@ import api from '~/services/api';
 import Background from '~/components/Background';
 import Appointment from '~/components/Appointment';
 
-import { Container, Title, List } from './styles';
+import { Menu, Container, Title, List, Message } from './styles';
 
 import Calendar from '~/assets/calendar.json';
 
-function Dashboard({ isFocused }) {
+function Dashboard({ isFocused, navigation }) {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -60,6 +61,15 @@ function Dashboard({ isFocused }) {
           </SafeAreaView>
       ) : (
         <Container>
+          <Menu>
+            <IconFA
+              style={{paddingRight: 20}}
+              onPress={() => navigation.openDrawer()}
+              name="bars"
+              color="#fff"
+              size={25}
+            />
+          </Menu>
           <Title>Agendamentos</Title>
             <List
               data={appointments}
@@ -68,6 +78,7 @@ function Dashboard({ isFocused }) {
                 <Appointment onCancel={() => handleCancel(item.id)} data={item} />
               )}
             />
+            <Message>Para cancelar seu agendamento, entre em contato com a Manicure</Message>
       </Container>
       )}
     </Background>

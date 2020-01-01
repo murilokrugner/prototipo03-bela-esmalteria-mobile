@@ -1,53 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect'
 import { PersistGate } from 'redux-persist/integration/react';
 import {AnimatedLinearGradient, presetColors} from 'react-native-animated-linear-gradient';
-
+import api from './services/api';
 import { Provider } from 'react-redux';
 import CodePush from 'react-native-code-push';
-import OneSignal from 'react-native-onesignal';
 import { StatusBar } from 'react-native';
 import App from './App';
-
 import './config/ReactotronConfig';
 
 import { store, persistor } from './store';
 
 console.disableYellowBox = true;
 
-class Index extends Component {
-  constructor(props) {
-    super(props);
+// import { Container } from './styles';
 
-    OneSignal.init('71ac1b06-4139-48c2-abe7-cd5fe31fa5b7');
-
-    OneSignal.addEventListener('received', this.onReceived);
-    OneSignal.addEventListener('opened', this.onOpened);
-    OneSignal.addEventListener('ids', this.onIds);
-  }
-
-  componentWillUnmount() {
-    OneSignal.removeEventListener('received', this.onReceived);
-    OneSignal.removeEventListener('opened', this.onOpened);
-    OneSignal.removeEventListener('ids', this.onIds);
-  }
-
-  onReceived = (data) => {};
-
-  onOpened = (notification) => {};
-
-  onIds = (id) => {};
-
-
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-            <StatusBar barStyle="light-content" backgroundColor={presetColors.instagram} speed={4000} />
-          <App />
-        </PersistGate>
-      </Provider>
-    );
-  }
+function Index() {
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <StatusBar barStyle="light-content" backgroundColor={presetColors.instagram} speed={4000} />
+        <App />
+      </PersistGate>
+    </Provider>
+  );
 }
 
 export default CodePush({

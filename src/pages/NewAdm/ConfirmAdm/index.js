@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import OneSignal from 'react-native-onesignal';
 import { formatRelative, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { TouchableOpacity } from 'react-native';
@@ -28,6 +29,9 @@ export default function ConfirmAdm({ navigation }) {
       service_id: service.id,
       date: time,
     });
+
+
+
 
     navigation.navigate('DashboardAdm');
   }

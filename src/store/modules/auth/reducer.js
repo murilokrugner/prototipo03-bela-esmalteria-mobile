@@ -4,6 +4,7 @@ const InitalState = {
   token: null,
   signed: false,
   provider: null,
+  id: '',
   loading: false,
 };
 
@@ -18,6 +19,7 @@ export default function auth(state = InitalState, action) {
         draft.token = action.payload.token;
         draft.signed = true;
         draft.provider = action.payload.user.provider;
+        draft.id = action.payload.user.id;
         draft.loading = false;
         break;
       }

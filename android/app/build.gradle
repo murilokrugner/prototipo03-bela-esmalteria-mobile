@@ -134,6 +134,9 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    /*compileSdkVersion 27
+    buildToolsVersion '27.0.3'*/
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -200,6 +203,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-push-notification')
     implementation project(':react-native-onesignal')
     implementation project(':react-native-code-push')
     implementation project(':react-native-vector-icons')

@@ -76,7 +76,7 @@ export default function CreateService({ navigation }) {
 }
 
 CreateService.navigationOptions = ({ navigation }) => ({
-  title: 'Criar novo serviço',
+  //title: 'Criar novo serviço',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {

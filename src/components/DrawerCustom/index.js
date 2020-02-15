@@ -46,11 +46,11 @@ export default function DrawerCustom({ navigation }) {
           <Name>Olá {profile.name}</Name>
 
           <SubmitButton onPress={() =>
-            navigation.navigate('ProfileEditAdm')
+            navigation.navigate('ProfileEdit')
             }>Atualizar Perfil</SubmitButton>
 
           <AboutButton onPress={() =>
-            navigation.navigate('AboutAdm')
+            navigation.navigate('About')
             }>Sobre</AboutButton>
           <LogoutButton onPress={handleLogout}>Sair</LogoutButton>
         </DrawerContent>

@@ -76,16 +76,21 @@ export default function EditingService({ navigation }) {
   );
 }
 
-
 EditingService.navigationOptions = ({ navigation }) => ({
-  title: 'Editar serviço',
+  //title: 'Editar serviço',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('SelectServiceEdit');
       }}
     >
+      <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
+  headerTransparent: true,
+  headerTintColor: '#FFF',
+  headerLeftContainerStyle: {
+    marginLeft: 20,
+  }
 });
 

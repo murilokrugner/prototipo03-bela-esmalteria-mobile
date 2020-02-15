@@ -14,7 +14,7 @@ export default function Adm({ navigation }) {
   const profile = useSelector(state => state.user.profile);
 
   const [loading, setLoading] = useState(true);
-  const [avatar, setAvatar] = useState(profile.avatar.url)
+  const [avatar, setAvatar] = useState(profile)
 
   useEffect(() => {
     setLoading(false);
@@ -34,9 +34,9 @@ export default function Adm({ navigation }) {
           <Form>
           <Avatar
                 source={{
-                  uri: profile.avatar
-                    ? profile.avatar.url
-                    : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+                  uri: avatar.avatar
+                    ? avatar.avatar.url
+                    : `https://api.adorable.io/avatars/50/${avatar.name}.png`,
                 }}
                 />
 

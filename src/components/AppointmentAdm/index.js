@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Swipeout from 'react-native-swipeout';
@@ -17,23 +17,16 @@ export default function AppointmentAdm({ data, onCancel }) {
     });
   }, [data.date]);*/
 
-  async function teste() {
-
-   console.tron.log('foi');
-  }
-
-
   return (
       <Container past={data.past}>
       <Left>
         <Info available={data.available}>
           <Avatar
             source={{
-            uri: data.appointment
-            ? data.appointment.user.avatar.url
-            : `https://api.adorable.io/avatars/60/${data.appointment
-              ? data.appointment.user.name: 'null'}.png`,
-          }}
+              uri: data.appointment
+              ? data.appointment.user.avatar.url
+              : `https://api.adorable.io/avatars/50/murilo.png`
+            }}
           />
           <Content>
             <Name>{data.appointment ? data.appointment.user.name : 'Disponível'}</Name>

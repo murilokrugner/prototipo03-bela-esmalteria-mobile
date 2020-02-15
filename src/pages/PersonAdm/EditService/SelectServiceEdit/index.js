@@ -47,7 +47,7 @@ export default function SelectServiceEdit({ navigation }) {
 }
 
 SelectServiceEdit.navigationOptions = ({ navigation }) => ({
-  title: 'Editar serviço',
+  title: 'Selecione um serviço para editar',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
@@ -57,4 +57,11 @@ SelectServiceEdit.navigationOptions = ({ navigation }) => ({
       <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
+  headerTransparent: true,
+  headerTintColor: '#FFF',
+  headerLeftContainerStyle: {
+    marginLeft: 20,
+  }
 });
+
+

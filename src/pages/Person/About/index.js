@@ -26,7 +26,7 @@ About.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Profile');
+        navigation.navigate('Dashboard');
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

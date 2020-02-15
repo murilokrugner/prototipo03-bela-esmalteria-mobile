@@ -82,7 +82,7 @@ export default function CreateUser() {
 }
 
 CreateUser.navigationOptions = ({ navigation }) => ({
-  title: 'Criar novo usuário',
+  /**title: 'Criar novo usuário',**/
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {

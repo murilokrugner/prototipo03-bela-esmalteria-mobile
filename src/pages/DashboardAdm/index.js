@@ -79,7 +79,6 @@ function DashboardAdm({ isFocused, navigation }) {
     }
   }, [date, isFocused]);
 
-
   async function handleCancel(id) {
     const response = await api.delete(`schedule/${id}`);
 

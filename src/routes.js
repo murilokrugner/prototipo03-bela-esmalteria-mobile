@@ -109,26 +109,18 @@ export default (provider, signed) => createAppContainer(
       },
       PersonAdm: {
         screen: createStackNavigator({
+          EditService: {
+            screen: createStackNavigator({
+              SelectServiceEdit,
+              EditingService,
+            },
+          )},
           ProfileAdm,
           ProfileEditAdm,
           AboutAdm,
           Users,
           CreateService,
           CreateUser,
-          EditService: {
-            screen: createStackNavigator({
-              SelectServiceEdit,
-              EditingService,
-            }, {
-              defaultNavigationOptions: {
-                headerTransparent: true,
-                headerTintColor: '#FFF',
-                headerLeftContainerStyle: {
-                  marginLeft: 20,
-                }
-              },
-            },
-          )}
         }, {
           defaultNavigationOptions: {
             headerTransparent: true,

@@ -53,15 +53,15 @@ export default function SignIn({ navigation }) {
 
           <SubmitButton loading={loading} onPress={handleSubmit}>Acessar</SubmitButton>
         </Form>
+      </Container>
+    </Background>
+  );
+}
 
-        <SignLink onPress={() => {navigation.navigate('Password')}}>
+/*<SignLink onPress={() => {navigation.navigate('Password')}}>
           <SignLinkText>Esqueci minha senha</SignLinkText>
         </SignLink>
 
         <SignLink onPress={() => {navigation.navigate('SignUp')}}>
           <SignLinkText>Criar conta gratuita</SignLinkText>
-        </SignLink>
-      </Container>
-    </Background>
-  );
-}
+        </SignLink>*/

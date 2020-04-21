@@ -101,6 +101,7 @@ export default function ProfileEdit({ navigation }) {
   }
 
   function handleSubmit() {
+    setLoading(true);
     dispatch(updateProfileRequest({
         name,
         email,
@@ -109,6 +110,9 @@ export default function ProfileEdit({ navigation }) {
         confirmPassword,
       })
     );
+    setLoading(false);
+    navigation.navigate('Dashboard');
+    navigation.openDrawer();
   }
 
   return (
@@ -198,7 +202,7 @@ export default function ProfileEdit({ navigation }) {
               onChangeText={setConfirmPassword}
             />
 
-          <SubmitButton onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
 
           </Form>
       </Container>
@@ -214,6 +218,7 @@ ProfileEdit.navigationOptions = ({ navigation }) => ({
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('Dashboard');
+        navigation.openDrawer();
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

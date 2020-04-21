@@ -6,7 +6,8 @@ import {
   StyleSheet,
   ScrollView,
   RefreshControl,
-  SafeAreaView
+  SafeAreaView,
+  Text,
 } from "react-native";
 import api from "~/services/api";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -38,18 +39,13 @@ const range = [8, 9, 10, 12, 13, 14, 15, 16];
 
 function DashboardAdm({ isFocused, navigation }) {
   const [appointments, setAppointments] = useState([]);
-  const [date, setDate] = useState(new Date());
   const [schedule, setSchedule] = useState([]);
-  const [service, setService] = useState([]);
+  const [date, setDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   async function loadSchedule() {
     const response = await api.get("schedule", {
-      params: { date }
-    });
-
-    const responseService = await api.get("schedule-service", {
       params: { date }
     });
 
@@ -64,12 +60,11 @@ function DashboardAdm({ isFocused, navigation }) {
         past: isBefore(compareDate, new Date()),
         appointment: response.data.find(a =>
           isEqual(parseISO(a.date), compareDate)
-        )
+        ),
       };
     });
 
     setSchedule(data);
-    setService(responseService.data);
     setLoading(false);
   }
 
@@ -80,17 +75,36 @@ function DashboardAdm({ isFocused, navigation }) {
   }, [date, isFocused]);
 
   async function handleCancel(id) {
-    const response = await api.delete(`schedule/${id}`);
-
-    setAppointments(
-      appointments.map(appointment =>
-        appointment.id === id
-          ? {
-            ...appointment,
-            canceled_at: response.data.canceled_at,
+    Alert.alert(
+      "Cancelar agendamento",
+      "Deseja cancelar mesmo esse agendamento?",
+      [
+        {
+          text: "Não",
+          onPress: () => {
+            return
+          },
+          style: "cancel"
+        },
+        { text: "Sim", onPress: () => {
+          async function canceld() {
+            const response = await api.delete(`schedule/${id}`);
+            setAppointments(
+              appointments.map(appointment =>
+                appointment.id === id
+                  ? {
+                    ...appointment,
+                    canceled_at: response.data.canceled_at,
+                  }
+                  : appointment
+              )
+            );
           }
-          : appointment
-      )
+          canceld();
+          loadSchedule();
+        }
+      }
+      ],
     );
   }
 
@@ -100,11 +114,13 @@ function DashboardAdm({ isFocused, navigation }) {
     });
   }
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true),
-    loadSchedule(),
+  const onRefresh = React.useCallback(async () => {
+    //setRefreshing(true), //nao usar
+    setLoading(true);
+    await loadSchedule();
+    setLoading(false);
 
-      wait(500).then(() => setRefreshing(false));
+     // wait(500).then(() => setRefreshing(false)); //nao usar
   }, [refreshing]);
 
   return (
@@ -142,11 +158,12 @@ function DashboardAdm({ isFocused, navigation }) {
               keyExtractor={item => item.time}
               renderItem={({ item }) => (
                 <AppointmentAdm onCancel={() =>
-                  handleCancel(item.appointment.id)}
-                  data={item} past={item.past}
-                  available={!item.appointment}/>
-                )}
+                handleCancel(item.appointment.id)}
+                data={item} past={item.past}
+                available={!item.appointment}
                 />
+                )}
+              />
           </ScrollView>
         </Container>
       )}

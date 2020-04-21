@@ -1,25 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { Alert, ActivityIndicator, StyleSheet } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Background from '~/components/Background';
-import { updateProfileRequest } from '~/store/modules/user/actions';
+import Background from '../../../components/Background';
+import { updateProfileRequest } from '../../../store/modules/user/actions';
 
-import { Container, Image, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
-import api from '~/services/api';
+import { Container, Image, Avatar, Separator, Form, FormInput, SubmitButton } from './styles';
+import api from '../../../services/api';
 
-export default function ProfileEditAdm({ navigation }) {
+export default function EditUser({ navigation }) {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.profile);
+  const user = navigation.getParam('user');
 
   const emailRef = useRef();
-  const nameRef = useRef();
-  const oldPasswordRef = useRef();
   const passwordRef = useRef();
-  const confirmPasswordRef = useRef();
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
   const [preview, setPreview] = useState();
@@ -29,18 +26,14 @@ export default function ProfileEditAdm({ navigation }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
-    setName(profile.name);
-    setEmail(profile.email);
-    setOldPassword('');
+    setName(user.name);
+    setEmail(user.email);
     setPassword('');
-    setConfirmPassword('');
-    setImageProfile(profile);
+    setImageProfile(user);
     setLoading(false);
-  }, [profile]);
+  }, [user]);
 
   function showImagePicker() {
     ImagePicker.showImagePicker(
@@ -102,20 +95,20 @@ export default function ProfileEditAdm({ navigation }) {
     }))
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     setLoading(true);
-    dispatch(updateProfileRequest({
-        name,
-        email,
-        oldPassword,
-        password,
-        confirmPassword,
-        //avatar_id: id,
-      })
-    );
-    setLoading(false);
-    navigation.navigate('DashboardAdm');
-    navigation.openDrawer();
+    await api.put('usersUpdate', {
+      id: user.id,
+      name: name,
+      email: email,
+      password: password,
+    });
+
+      Alert.alert('Dados do usuário atualizados');
+      setLoading(false);
+      navigation.navigate('DashboardAdm');
+      navigation.openDrawer();
+
   }
 
   return (
@@ -126,11 +119,7 @@ export default function ProfileEditAdm({ navigation }) {
       ) : (
         <Container>
           <Form>
-          <Image
-            onPress={showImagePicker}
-            >
-              Alterar foto
-          </Image>
+
           { imageProfile === '' ? (
             <ActivityIndicator size="small" color="#fff" align="center"
               style={styles.loadAvatar} />
@@ -147,7 +136,7 @@ export default function ProfileEditAdm({ navigation }) {
               icon="person-outline"
               autoCorrect={false}
               autoCapitalize="none"
-              placeholder="Digite seu nome completo"
+              placeholder="Nome do usuário"
               returnKeyType="next"
               onSubmitEditing={() => emailRef.current.focus()}
               value={name}
@@ -159,12 +148,13 @@ export default function ProfileEditAdm({ navigation }) {
               keyboardType="email-address"
               autoCorrect={false}
               autoCapitalize="none"
-              placeholder="Digite seu e-mail"
+              placeholder="E-mail"
               ref={emailRef}
               returnKeyType="next"
-              onSubmitEditing={() => OldpasswordRef.current.focus()}
+              onSubmitEditing={() => passwordRef.current.focus()}
               value={email}
               onChangeText={setEmail}
+
             />
 
             <Separator />
@@ -172,37 +162,13 @@ export default function ProfileEditAdm({ navigation }) {
             <FormInput
               icon="lock-outline"
               secureTextEntry
-              placeholder="Sua senha atual"
-              ref={oldPasswordRef}
-              returnKeyType="next"
-              onSubmitEditing={() => passwordRef.current.focus()}
-              returnKeyType="send"
-              onSubmitEditing={handleSubmit}
-              value={oldPassword}
-              onChangeText={setOldPassword}
-            />
-
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Sua nova senha"
+              placeholder="nova senha"
               ref={passwordRef}
-              returnKeyType="next"
-              onSubmitEditing={() => confirmPasswordRef.current.focus()}
+              returnKeyType="send"
               onSubmitEditing={handleSubmit}
               value={password}
               onChangeText={setPassword}
-            />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Confirmação de senha"
-              ref={confirmPasswordRef}
-              returnKeyType="send"
-              onSubmitEditing={handleSubmit}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
             />
 
           <SubmitButton loading={loading} onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
@@ -215,12 +181,12 @@ export default function ProfileEditAdm({ navigation }) {
   );
 }
 
-ProfileEditAdm.navigationOptions = ({ navigation }) => ({
-  title: 'Edite seu perfil',
+EditUser.navigationOptions = ({ navigation }) => ({
+  title: 'Editar usuário',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('DashboardAdm');
+        navigation.navigate('Users');
         navigation.openDrawer();
       }}
     >
@@ -242,3 +208,4 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   }
 })
+

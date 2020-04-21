@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, SafeAreaView } from 'react-native';
+import { Image, ActivityIndicator, StyleSheet, SafeAreaView, RefreshControl, ScrollView, } from 'react-native';
 //import { DotIndicator } from 'react-native-indicators';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,16 +8,19 @@ import Lottie from 'lottie-react-native';
 
 import api from '~/services/api';
 
+import sino from '../../assets/sino.png';
+
 import Background from '~/components/Background';
 import Appointment from '~/components/Appointment';
 
-import { Menu, Container, Title, List, Message } from './styles';
+import { Menu, Container, Title, List, BoxImage, Message } from './styles';
 
 import Calendar from '~/assets/calendar.json';
 
 function Dashboard({ isFocused, navigation }) {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   async function loadAppointments() {
     const response = await api.get('appointments');
@@ -31,6 +34,15 @@ function Dashboard({ isFocused, navigation }) {
       loadAppointments();
     }
   }, [isFocused])
+
+  const onRefresh = React.useCallback(async () => {
+    //setRefreshing(true), //nao usar
+    setLoading(true);
+    await loadAppointments();
+    setLoading(false);
+
+     // wait(500).then(() => setRefreshing(false)); //nao usar
+  }, [refreshing]);
 
   async function handleCancel(id) {
     const response = await api.delete(`appointments/${id}`);
@@ -70,6 +82,11 @@ function Dashboard({ isFocused, navigation }) {
               size={25}
             />
           </Menu>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
           <Title>Agendamentos</Title>
             <List
               data={appointments}
@@ -78,7 +95,12 @@ function Dashboard({ isFocused, navigation }) {
                 <Appointment onCancel={() => handleCancel(item.id)} data={item} />
               )}
             />
-            <Message>Para cancelar seu agendamento, entre em contato com a Manicure</Message>
+            <BoxImage>
+              <Image source={sino} style={{width: 30, height: 30}}/>
+              <Message>Para cancelar seu agendamento</Message>
+              <Message>entre em contato com a Manicure</Message>
+            </BoxImage>
+            </ScrollView>
       </Container>
       )}
     </Background>

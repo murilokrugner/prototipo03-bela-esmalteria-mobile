@@ -3,11 +3,13 @@ import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Swipeout from 'react-native-swipeout';
 import LongPressForAndroidSwipeout from 'react-native-swipeout-longpressforandroid'
-import { Alert, TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Left, Avatar, Info, Name, Time, Content } from './styles';
 import { bold } from 'ansi-colors';
+
+import api from '../../services/api';
 
 export default function AppointmentAdm({ data, onCancel }) {
   /*const dateParsed = useMemo(() => {
@@ -16,6 +18,7 @@ export default function AppointmentAdm({ data, onCancel }) {
       addSuffix: true,
     });
   }, [data.date]);*/
+
 
   return (
       <Container past={data.past}>
@@ -30,12 +33,13 @@ export default function AppointmentAdm({ data, onCancel }) {
           />
           <Content>
             <Name>{data.appointment ? data.appointment.user.name : 'Disponível'}</Name>
+            <Name>{data.appointment ? 'Serviço: ' + data.appointment.service.name : ''}</Name>
             <Time>Horário: {data.time}</Time>
           </Content>
         </Info>
       </Left>
 
-      {data.appointment && data.appointment && (
+      {data.appointment && !data.past && !data.canceled_at &&(
           <TouchableOpacity onPress={onCancel}>
             <Icon name="event-busy" size={30} color="#f64c75" />
           </TouchableOpacity>

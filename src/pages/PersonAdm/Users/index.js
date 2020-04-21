@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Background from '~/components/Background';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { withNavigationFocus } from "react-navigation";
 import api from '~/services/api';
 
-import { Container, UsersList, User, Name, Avatar } from './styles';
+import { Container, UsersList, User, Name, Alter, Avatar } from './styles';
 
-export default function Users() {
+function Users({isFocused, navigation }) {
+  const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    async function loadUsers() {
-      const response = await api.get('listusers');
+    if (isFocused) {
+      async function loadUsers() {
+        const response = await api.get('listusers');
 
-      setUsers(response.data);
+        setUsers(response.data);
+      }
+
+      loadUsers();
     }
 
-    loadUsers();
-  }, [])
+    setLoading(false);
+
+  }, [isFocused])
 
   return (
     <Background>
       <Container>
-      <UsersList
+        { loading ? (
+          <ActivityIndicator color="#fff" />
+        ): (
+          <UsersList
           data={users}
           keyExtractor={user => user.id}
           renderItem={({ item: user }) => (
@@ -37,9 +46,11 @@ export default function Users() {
                 }}
                 />
               <Name>{user.name}</Name>
+              <Alter onPress={() => {navigation.navigate('EditUser', {user})}}>Alterar</Alter>
             </User>
           )}
         />
+        )}
       </Container>
     </Background>
   );
@@ -57,3 +68,5 @@ Users.navigationOptions = ({ navigation }) => ({
     </TouchableOpacity>
   ),
 });
+
+export default withNavigationFocus(Users);

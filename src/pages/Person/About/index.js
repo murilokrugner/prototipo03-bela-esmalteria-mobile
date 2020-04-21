@@ -27,6 +27,7 @@ About.navigationOptions = ({ navigation }) => ({
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('Dashboard');
+        navigation.openDrawer();
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

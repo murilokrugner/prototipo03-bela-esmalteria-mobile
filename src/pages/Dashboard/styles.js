@@ -23,10 +23,16 @@ export const List = styled.FlatList.attrs({
   contentContainerStyle: { padding: 30 }
 })``;
 
-export const Message = styled.Text`
+export const BoxImage = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
-  margin-left: 10px;
-  color: #fff;
+  height: 350px;
+`;
+
+export const Message = styled.Text`
+  color: #000;
   font-size: 12px;
   font-weight: bold;
 `;

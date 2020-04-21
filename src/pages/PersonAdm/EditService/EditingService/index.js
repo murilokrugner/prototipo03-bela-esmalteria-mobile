@@ -8,6 +8,7 @@ import { Container, Header, HeaderName, Form, FormInput, SubmitButton } from './
 import api from '../../../../services/api';
 
 export default function EditingService({ navigation }) {
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
@@ -20,6 +21,7 @@ export default function EditingService({ navigation }) {
   const durationRef = useRef();
 
   async function handleSubmit() {
+    setLoading(true);
     const response = await api.put(`services/${service.id}`, {
       name,
       price,
@@ -28,6 +30,9 @@ export default function EditingService({ navigation }) {
 
     if (response) {
       Alert.alert('Serviço atualizado!');
+      setLoading(false);
+      navigation.navigate('DashboardAdm');
+      navigation.openDrawer();
     }
   }
 
@@ -69,7 +74,7 @@ export default function EditingService({ navigation }) {
           />
         </Form>
 
-        <SubmitButton onPress={handleSubmit}>Atualizar</SubmitButton>
+        <SubmitButton loading={loading} onPress={handleSubmit}>Atualizar</SubmitButton>
 
       </Container>
     </Background>

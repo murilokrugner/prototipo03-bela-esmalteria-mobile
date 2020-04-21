@@ -24,6 +24,8 @@ export default function SelectUserAdm({ navigation }) {
     loadUsers();
   }, []);
 
+  console.tron.log(users);
+
   return (
     <Background>
       { loading ? (
@@ -40,13 +42,19 @@ export default function SelectUserAdm({ navigation }) {
                   navigation.navigate('SelectServiceAdm', { user })
                 }
               >
-                <Avatar
+                {user.avatar === '' ? (
+                  <ActivityIndicator size="small" color="#000" align="center"
+                  style={styles.loadAvatar} />
+                ): (
+                  <Avatar
                 source={{
                   uri: user.avatar
                     ? user.avatar.url
                     : `https://api.adorable.io/avatars/50/${user.name}.png`,
                 }}
                 />
+                )}
+
                 <Name>{user.name}</Name>
               </User>
             )}
@@ -75,4 +83,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
+  loadAvatar: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+  }
 })

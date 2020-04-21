@@ -9,7 +9,7 @@ import { signUpRequest } from '~/store/modules/auth/actions';
 
 import { Container, Header, Form, FormInput, SubmitButton, Box, TBox } from './styles';
 
-export default function CreateUser() {
+export default function CreateUser({ navigation }) {
   const dispatch = useDispatch();
 
   const emailRef = useRef();
@@ -24,8 +24,9 @@ export default function CreateUser() {
 
   async function handleSubmit() {
     const provider = checked;
-    console.tron.log(provider);
     dispatch(signUpRequest(name, email, password, provider));
+    navigation.navigate('DashboardAdm');
+    navigation.openDrawer();
   }
 
   return (
@@ -87,6 +88,7 @@ CreateUser.navigationOptions = ({ navigation }) => ({
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('DashboardAdm');
+        navigation.openDrawer();
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

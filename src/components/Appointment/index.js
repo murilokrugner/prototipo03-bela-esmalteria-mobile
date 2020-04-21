@@ -14,6 +14,8 @@ export default function Appointment({ data, onCancel }) {
     });
   }, [data.date]);
 
+  console.tron.log(data);
+
   return (
     <Container past={data.past}>
       <Left>
@@ -26,15 +28,18 @@ export default function Appointment({ data, onCancel }) {
         />
         <Info>
           <Name>Professional: {data.provider.name}</Name>
+          <Name>{data.service ? 'Serviço: ' + data.service.name : ''}</Name>
           <Time>{dateParsed}</Time>
         </Info>
       </Left>
 
-      {data.cancelable && !data.canceled_at && (
-        <TouchableOpacity onPress={onCancel}>
-          <Icon name="event-busy" size={20} color="#f64c75" />
-        </TouchableOpacity>
-      )}
+
     </Container>
   );
 }
+
+/*{data.cancelable && !data.canceled_at && (
+        <TouchableOpacity onPress={onCancel}>
+          <Icon name="event-busy" size={20} color="#f64c75" />
+        </TouchableOpacity>
+      )}*/

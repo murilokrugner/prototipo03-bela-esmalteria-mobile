@@ -12,6 +12,8 @@ export default class OneSignalConfig extends Component {
       user: '',
     }
 
+    console.tron.log(idUser);
+
     OneSignal.init('2b0a8b54-2681-4a01-bcad-9f1b81d08f71');
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
@@ -33,7 +35,7 @@ export default class OneSignalConfig extends Component {
       this.state = {user: this.props.idUser, playerId: id.userId};
 
       async function save(user, playerId) {
-        const response =  await api.post('/playerid', {
+        const response =  await api.put('/playerid', {
           user_id: user,
           player: playerId,
         });

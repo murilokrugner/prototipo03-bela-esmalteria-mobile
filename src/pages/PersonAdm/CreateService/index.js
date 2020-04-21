@@ -10,6 +10,7 @@ import { Container, Form, FormInput, SubmitButton, Header } from './styles';
 import api from '../../../services/api';
 
 export default function CreateService({ navigation }) {
+  const [loading, setLoading] = useState(false);
   const priceRef = useRef();
   const durationRef = useRef();
 
@@ -18,6 +19,7 @@ export default function CreateService({ navigation }) {
   const [duration, setDuration] = useState('');
 
   async function handleSubmit() {
+    setLoading(true);
     const response = await api.post('services', {
       name,
       price,
@@ -26,7 +28,11 @@ export default function CreateService({ navigation }) {
 
     if (response) {
       Alert.alert('Serviço cadastrado!');
+      setLoading(false);
+      navigation.navigate('DashboardAdm');
+      navigation.openDrawer();
     }
+
   }
 
   return (
@@ -61,14 +67,14 @@ export default function CreateService({ navigation }) {
             icon="person-outline"
             keyboardType="phone-pad"
             autoCorrect={false}
-            placeholder="Digite o tempo de duração"
+            placeholder="Digite o tempo de duração em minutos"
             ref={durationRef}
             returnkeyType="send"
             value={duration}
             onChangeText={setDuration}
           />
 
-          <SubmitButton onPress={handleSubmit}>Cadastrar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleSubmit}>Cadastrar</SubmitButton>
         </Form>
       </Container>
     </Background>
@@ -81,6 +87,7 @@ CreateService.navigationOptions = ({ navigation }) => ({
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('DashboardAdm');
+        navigation.openDrawer();
       }}
     >
       <Icon name="chevron-left" size={20} color="#fff" />

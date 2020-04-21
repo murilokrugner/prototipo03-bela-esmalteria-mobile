@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Text
+  Text, ActivityIndicator
 } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,11 +20,11 @@ export default function DrawerCustomAdm({ navigation }) {
   const profile = useSelector(state => state.user.profile);
 
   const [loading, setLoading] = useState(true);
-  const [avatar, setAvatar] = useState(profile);
+  const [avatar, setAvatar] = useState('');
 
   useEffect(() => {
-    setLoading(false);
-  }, [profile]);
+    setAvatar(profile);
+  }, []);
 
   function handleLogout() {
     dispatch(signOut());
@@ -36,14 +36,17 @@ export default function DrawerCustomAdm({ navigation }) {
       <ScrollView>
         <DrawerContent style={{flex: 1, flexDirection: 'column',
           justifyContent: 'space-around', width: 230, height: 800}}>
-          <Avatar
-            source={{
-              uri: avatar.avatar
-              ? avatar.avatar.url
-              : `https://api.adorable.io/avatars/50/${avatar.name}.png`,
-            }}
-          />
-
+            { avatar === '' ? (
+              <ActivityIndicator color="#000"/>
+            ) : (
+              <Avatar
+              source={{
+                uri: avatar.avatar
+                ? avatar.avatar.url
+                : `https://api.adorable.io/avatars/50/${avatar.name}.png`,
+              }}
+            />
+            )}
           <Name>Olá {profile.name}</Name>
 
           <SubmitButton onPress={() =>

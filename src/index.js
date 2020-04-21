@@ -20,7 +20,7 @@ function Index() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <StatusBar barStyle="light-content" backgroundColor={presetColors.instagram} speed={4000} />
+        <StatusBar barStyle="light-content" backgroundColor={"#f08080"}  />
         <App />
       </PersistGate>
     </Provider>

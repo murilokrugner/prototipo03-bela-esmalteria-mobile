@@ -45,8 +45,8 @@ export default function SelectServiceAdm({ navigation }) {
                 }
               >
                 <Service>
-                  <Name>Tipo: {service.name}</Name>
-                  <Name>Preço: R$-{service.price},00</Name>
+                  <Name>Tipo: {service.name} </Name>
+                  <Name>Preço: R$-{service.price},00 </Name>
                   <Name>Duração: {service.duration} min</Name>
                 </Service>
               </Provider>

@@ -49,6 +49,7 @@ import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
 import About from './pages/Person/About';
 
+import EditUser from './pages/PersonAdm/EditUser';
 import SelectUserAdm from './pages/NewAdm/SelectUserAdm';
 import SelectServiceAdm from './pages/NewAdm/SelectServiceAdm';
 import SelectDateTimeAdm from './pages/NewAdm/SelectDateTimeAdm';
@@ -119,6 +120,7 @@ export default (provider, signed) => createAppContainer(
           ProfileEditAdm,
           AboutAdm,
           Users,
+          EditUser,
           CreateService,
           CreateUser,
         }, {
@@ -140,7 +142,7 @@ export default (provider, signed) => createAppContainer(
     App: createDrawerNavigator({
       Client: createBottomTabNavigator({
         Dashboard,
-        New: {
+        /*New: {
           screen: createStackNavigator({
             SelectProvider,
             SelectService,
@@ -166,7 +168,7 @@ export default (provider, signed) => createAppContainer(
               color = "rgba(255, 255, 255, 0.6)" / >
             )
           },
-        },
+        },*/
       }, {
         resetOnBlur: true,
         tabBarOptions: {

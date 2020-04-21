@@ -7,7 +7,7 @@ import createRouter from './routes';
 export default function App() {
   const signed = useSelector(state => state.auth.signed);
   const provider = useSelector(state => state.auth.provider);
-  const user = useSelector(state => state.auth.id.id);
+  const user = useSelector(state => state.auth.id);
   const Routes = createRouter(provider, signed);
 
   return (

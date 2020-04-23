@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,7 +8,7 @@ import { Container, Header, HeaderName, Form, FormInput, SubmitButton } from './
 import api from '../../../../services/api';
 
 export default function EditingService({ navigation }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
@@ -19,6 +19,13 @@ export default function EditingService({ navigation }) {
 
   const priceRef = useRef();
   const durationRef = useRef();
+
+  useEffect(() => {
+    setName(service.name);
+    setPrice(prices);
+    setDuration(durations);
+    setLoading(false);
+  }, []);
 
   async function handleSubmit() {
     setLoading(true);
@@ -45,7 +52,7 @@ export default function EditingService({ navigation }) {
           <FormInput
             icon="person-outline"
             autoCorrect={false}
-            placeholder={service.name}
+            placeholder={'Descrição do serviço'}
             value={name}
             onSubmitEditing={() => priceRef.current.focus()}
             returnKeyType="next"
@@ -55,7 +62,7 @@ export default function EditingService({ navigation }) {
           <FormInput
             icon="person-outline"
             autoCorrect={false}
-            placeholder={prices}
+            placeholder={'Preço do serviço'}
             ref={priceRef}
             onSubmitEditing={() => durationRef.current.focus()}
             returnKeyType="next"
@@ -66,7 +73,7 @@ export default function EditingService({ navigation }) {
           <FormInput
             icon="person-outline"
             autoCorrect={false}
-            placeholder={durations}
+            placeholder={'Duração do serviço em minutos'}
             ref={durationRef}
             value={duration}
             returnKeyType="send"

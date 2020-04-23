@@ -45,7 +45,9 @@ function Users({isFocused, navigation }) {
                     : `https://api.adorable.io/avatars/50/${user.name}.png`,
                 }}
                 />
-              <Name>{user.name}</Name>
+              <Name>Nome: {user.name}</Name>
+              <Name>E-mail: {user.email}</Name>
+              <Name>Telefone: {user.phone}</Name>
               <Alter onPress={() => {navigation.navigate('EditUser', {user})}}>Alterar</Alter>
             </User>
           )}

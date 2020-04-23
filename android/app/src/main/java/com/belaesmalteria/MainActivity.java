@@ -16,6 +16,7 @@ public class MainActivity extends ReactActivity {
         return "belaesmalteria";
     }
 
+
     @Override
       protected ReactActivityDelegate createReactActivityDelegate() {
       return new ReactActivityDelegate(this, getMainComponentName()) {

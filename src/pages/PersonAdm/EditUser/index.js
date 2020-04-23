@@ -1,21 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { Alert, ActivityIndicator, StyleSheet } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '../../../components/Background';
-import { updateProfileRequest } from '../../../store/modules/user/actions';
 
 import { Container, Image, Avatar, Separator, Form, FormInput, SubmitButton } from './styles';
 import api from '../../../services/api';
 
 export default function EditUser({ navigation }) {
-  const dispatch = useDispatch();
   const user = navigation.getParam('user');
 
   const emailRef = useRef();
+  const phoneRef = useRef();
   const passwordRef = useRef();
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
@@ -24,76 +22,20 @@ export default function EditUser({ navigation }) {
   const [imageProfile, setImageProfile] = useState('');
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  console.log(user);
 
   useEffect(() => {
     setName(user.name);
     setEmail(user.email);
+    setPhone(user.phone);
     setPassword('');
     setImageProfile(user);
     setLoading(false);
   }, [user]);
-
-  function showImagePicker() {
-    ImagePicker.showImagePicker(
-      {
-        title: 'Selecione uma nova foto',
-      },
-      upload => {
-        if (upload.uri) {
-          const previewData = {
-            uri: `data:image/jpeg;base64,${upload.data}`,
-          };
-
-          let prefix;
-          let ext;
-
-          if (upload.fileName) {
-            [prefix, ext] = upload.fileName.split('.');
-            ext = ext.toLowerCase() === 'heic' ? 'jpg' : ext;
-          } else {
-            prefix = new Date().getTime();
-            ext = 'jpg';
-          }
-
-          const imageData = {
-            uri: upload.uri,
-            type: upload.type,
-            name: `${prefix}.${ext}`,
-          };
-
-          setPreview(previewData);
-          handleUploadImage(imageData);
-        }
-      },
-    );
-  }
-
-  async function handleUploadImage(imageData) {
-    setLoadingAvatar(true);
-    const data = new FormData();
-
-    data.append('file', imageData);
-
-    const response = await api.post('files', data);
-
-    const { id, url } = response.data;
-
-    setImage(id);
-    setPreview(url);
-    handleImage(id);
-    setLoadingAvatar(false);
-
-  }
-
-  function handleImage(id) {
-    dispatch(updateProfileRequest({
-      name,
-      email,
-      avatar_id: id,
-    }))
-  }
 
   async function handleSubmit() {
     setLoading(true);
@@ -101,6 +43,7 @@ export default function EditUser({ navigation }) {
       id: user.id,
       name: name,
       email: email,
+      phone: phone,
       password: password,
     });
 
@@ -128,7 +71,7 @@ export default function EditUser({ navigation }) {
               source={{
               uri: imageProfile.avatar
               ? imageProfile.avatar.url
-              : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+              : `https://api.adorable.io/avatars/50/${user.name}.png`,
               }}
             />
           )}
@@ -151,10 +94,23 @@ export default function EditUser({ navigation }) {
               placeholder="E-mail"
               ref={emailRef}
               returnKeyType="next"
-              onSubmitEditing={() => passwordRef.current.focus()}
+              onSubmitEditing={() => phoneRef.current.focus()}
               value={email}
               onChangeText={setEmail}
 
+            />
+
+            <FormInput
+              icon="mail-outline"
+              keyboardType="numeric"
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Telefone/Celular"
+              ref={phoneRef}
+              returnKeyType="next"
+              onSubmitEditing={() => passwordRef.current.focus()}
+              value={phone}
+              onChangeText={setPhone}
             />
 
             <Separator />

@@ -13,10 +13,12 @@ export default function CreateUser({ navigation }) {
   const dispatch = useDispatch();
 
   const emailRef = useRef();
+  const phoneRef = useRef();
   const passRef = useRef();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
 
@@ -24,7 +26,7 @@ export default function CreateUser({ navigation }) {
 
   async function handleSubmit() {
     const provider = checked;
-    dispatch(signUpRequest(name, email, password, provider));
+    dispatch(signUpRequest(name, email, phone, password, provider));
     navigation.navigate('DashboardAdm');
     navigation.openDrawer();
   }
@@ -52,9 +54,22 @@ export default function CreateUser({ navigation }) {
             ref={emailRef}
             placeholder="e-mail do usuário"
             returnKeyType="next"
-            onSubmitEditing={() => passRef.current.focus()}
+            onSubmitEditing={() => phoneRef.current.focus()}
             value={email}
             onChangeText={setEmail}
+          />
+
+          <FormInput
+            icon="person-outline"
+            autoCorrect={false}
+            keyboardType="numeric"
+            autoCapitalize="none"
+            ref={phoneRef}
+            placeholder="telefone/celular"
+            returnKeyType="next"
+            onSubmitEditing={() => passRef.current.focus()}
+            value={phone}
+            onChangeText={setPhone}
           />
 
           <FormInput

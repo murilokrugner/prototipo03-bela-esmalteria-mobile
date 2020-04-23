@@ -5,7 +5,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import {AnimatedLinearGradient, presetColors} from 'react-native-animated-linear-gradient';
 import api from './services/api';
 import { Provider } from 'react-redux';
-import CodePush from 'react-native-code-push';
 import { StatusBar } from 'react-native';
 import App from './App';
 import './config/ReactotronConfig';
@@ -27,6 +26,4 @@ function Index() {
   );
 }
 
-export default CodePush({
-  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-})(Index);
+export default Index;

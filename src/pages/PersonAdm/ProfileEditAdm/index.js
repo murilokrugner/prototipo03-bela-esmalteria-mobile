@@ -16,6 +16,7 @@ export default function ProfileEditAdm({ navigation }) {
   const profile = useSelector(state => state.user.profile);
 
   const emailRef = useRef();
+  const phoneRef = useRef();
   const nameRef = useRef();
   const oldPasswordRef = useRef();
   const passwordRef = useRef();
@@ -28,6 +29,7 @@ export default function ProfileEditAdm({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,6 +37,7 @@ export default function ProfileEditAdm({ navigation }) {
   useEffect(() => {
     setName(profile.name);
     setEmail(profile.email);
+    setPhone(profile.phone);
     setOldPassword('');
     setPassword('');
     setConfirmPassword('');
@@ -107,6 +110,7 @@ export default function ProfileEditAdm({ navigation }) {
     dispatch(updateProfileRequest({
         name,
         email,
+        phone,
         oldPassword,
         password,
         confirmPassword,
@@ -165,6 +169,19 @@ export default function ProfileEditAdm({ navigation }) {
               onSubmitEditing={() => OldpasswordRef.current.focus()}
               value={email}
               onChangeText={setEmail}
+            />
+
+            <FormInput
+              icon="mail-outline"
+              keyboardType="numeric"
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Telefone/Celular"
+              ref={phoneRef}
+              returnKeyType="next"
+              onSubmitEditing={() => OldpasswordRef.current.focus()}
+              value={phone}
+              onChangeText={setPhone}
             />
 
             <Separator />

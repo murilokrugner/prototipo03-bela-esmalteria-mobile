@@ -1,4 +1,5 @@
 import React from 'react';
+import CodePush from 'react-native-code-push';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect'
 import { PersistGate } from 'redux-persist/integration/react';
@@ -26,4 +27,6 @@ function Index() {
   );
 }
 
-export default Index;
+export default CodePush({
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+})(Index);

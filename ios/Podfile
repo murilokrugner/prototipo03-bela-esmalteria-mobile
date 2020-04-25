@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'belaMobile' do
-  # Pods for belaMobile
+target 'belaesmalteria' do
+  # Pods for belaesmalteria
   pod 'React', :path => '../node_modules/react-native/'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -35,7 +35,7 @@ target 'belaMobile' do
 
   pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
 
-  target 'belaMobileTests' do
+  target 'belaesmalteriaTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -43,10 +43,10 @@ target 'belaMobile' do
   use_native_modules!
 end
 
-target 'belaMobile-tvOS' do
-  # Pods for belaMobile-tvOS
+target 'belaesmalteria-tvOS' do
+  # Pods for belaesmalteria-tvOS
 
-  target 'belaMobile-tvOSTests' do
+  target 'belaesmalteria-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

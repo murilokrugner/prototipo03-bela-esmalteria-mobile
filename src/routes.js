@@ -27,10 +27,10 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Password from './pages/Password';
 
-import SelectProvider from './pages/New/SelectProvider';
+/*import SelectProvider from './pages/New/SelectProvider';
 import SelectService from './pages/New/SelectService';
 import SelectDateTime from './pages/New/SelectDateTime';
-import Confirm from './pages/New/Confirm';
+import Confirm from './pages/New/Confirm';*/
 
 import Dashboard from './pages/Dashboard';
 
@@ -45,7 +45,7 @@ import CreateUser from './pages/PersonAdm/CreateUser';
 import SelectServiceEdit from './pages/PersonAdm/EditService/SelectServiceEdit';
 import EditingService from './pages/PersonAdm/EditService/EditingService';
 
-import Profile from './pages/Person/Profile';
+//import Profile from './pages/Person/Profile';
 import ProfileEdit from './pages/Person/ProfileEdit';
 import About from './pages/Person/About';
 
@@ -55,7 +55,7 @@ import SelectServiceAdm from './pages/NewAdm/SelectServiceAdm';
 import SelectDateTimeAdm from './pages/NewAdm/SelectDateTimeAdm';
 import ConfirmAdm from './pages/NewAdm/ConfirmAdm';
 
-import Feed from './pages/Feed';
+//import Feed from './pages/Feed';
 
 export default (provider, signed) => createAppContainer(
   createSwitchNavigator({

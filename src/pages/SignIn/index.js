@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import {presetColors} from 'react-native-animated-linear-gradient';
 import { Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,7 +22,7 @@ export default function SignIn({ navigation }) {
   }
 
   return (
-    <Background customColors={presetColors.instagram} speed={4000}>
+    <Background >
       <Container>
         <Image source={logo} style={{width: 200, height: 200 }}/>
 

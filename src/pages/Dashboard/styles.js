@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-
+import { Dimensions } from 'react-native';
 export const Menu = styled.View`
   align-items: flex-end;
   margin-right: 2px;
@@ -16,6 +16,14 @@ export const Title = styled.Text`
   font-weight: bold;
   align-self: center;
   margin-top: 30px;
+`;
+
+export const BoxNotAppoint = styled.View`
+  flex: 1;
+  Dimensions.get('window').height;
+  margin-top: 100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const List = styled.FlatList.attrs({

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ActivityIndicator, StyleSheet, SafeAreaView, RefreshControl, ScrollView, } from 'react-native';
+import { Image, Text, StyleSheet, SafeAreaView, RefreshControl, ScrollView, } from 'react-native';
 //import { DotIndicator } from 'react-native-indicators';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { withNavigationFocus } from 'react-navigation';
 import Lottie from 'lottie-react-native';
-
+import Sad from '../../assets/sad.png';
 import api from '~/services/api';
 
 import sino from '../../assets/sino.png';
@@ -13,12 +13,13 @@ import sino from '../../assets/sino.png';
 import Background from '~/components/Background';
 import Appointment from '~/components/Appointment';
 
-import { Menu, Container, Title, List, BoxImage, Message } from './styles';
+import { Menu, Container, Title, BoxNotAppoint, List, BoxImage, Message } from './styles';
 
 import Calendar from '~/assets/calendar.json';
 
 function Dashboard({ isFocused, navigation }) {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState(['']);
+  const [haveAppointment, setHaveAppointment] = useState();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -26,6 +27,13 @@ function Dashboard({ isFocused, navigation }) {
     const response = await api.get('appointments');
 
     setAppointments(response.data);
+
+    if (response.data) {
+      setHaveAppointment(true);
+    } else {
+      setHaveAppointment(false);
+    }
+
     setLoading(false);
   }
 
@@ -59,6 +67,8 @@ function Dashboard({ isFocused, navigation }) {
     );
   }
 
+  console.tron.log(appointments);
+
   return (
     <Background>
       { loading ? (
@@ -88,18 +98,26 @@ function Dashboard({ isFocused, navigation }) {
             }
           >
           <Title>Agendamentos</Title>
-            <List
-              data={appointments}
-              keyExtractor={item => String(item.id)}
-              renderItem={({ item }) => (
-                <Appointment onCancel={() => handleCancel(item.id)} data={item} />
-              )}
-            />
-            <BoxImage>
-              <Image source={sino} style={{width: 30, height: 30}}/>
-              <Message>Para cancelar seu agendamento</Message>
-              <Message>entre em contato com a Manicure</Message>
-            </BoxImage>
+            { !haveAppointment && (
+              <BoxNotAppoint>
+                <Image source={Sad} style={{width: 80, height: 80}}/>
+                <Text>Você não possui nenhum agendamento...</Text>
+              </BoxNotAppoint>
+            )}
+              <>
+                <List
+                  data={appointments}
+                  keyExtractor={item => String(item.id)}
+                  renderItem={({ item }) => (
+                    <Appointment onCancel={() => handleCancel(item.id)} data={item} />
+                  )}
+                />
+                <BoxImage>
+                  <Image source={sino} style={{width: 30, height: 30}}/>
+                  <Message>Para cancelar seu agendamento</Message>
+                  <Message>entre em contato com a Manicure</Message>
+                </BoxImage>
+              </>
             </ScrollView>
       </Container>
       )}

@@ -24,44 +24,43 @@ export default function SelectUserAdm({ navigation }) {
     loadUsers();
   }, []);
 
-  console.tron.log(users);
 
   return (
     <Background>
-      { loading ? (
+      {loading ? (
         <ActivityIndicator size="large" color="#FFF" align="center"
-        style={styles.load}/>
+          style={styles.load} />
       ) : (
-        <Container>
-          <UsersList
-            data={users}
-            keyExtractor={user => String(user.id)}
-            renderItem={({ item: user }) => (
-              <User
-                onPress={() =>
-                  navigation.navigate('SelectServiceAdm', { user })
-                }
-              >
-                {user.avatar === '' ? (
-                  <ActivityIndicator size="small" color="#000" align="center"
-                  style={styles.loadAvatar} />
-                ): (
-                  <Avatar
-                source={{
-                  uri: user.avatar
-                    ? user.avatar.url
-                    : `https://api.adorable.io/avatars/50/${user.name}.png`,
-                }}
-                />
-                )}
+          <Container>
+            <UsersList
+              data={users}
+              keyExtractor={user => String(user.id)}
+              renderItem={({ item: user }) => (
+                <User
+                  onPress={() =>
+                    navigation.navigate('SelectServiceAdm', { user })
+                  }
+                >
+                  {user.avatar === '' ? (
+                    <ActivityIndicator size="small" color="#000" align="center"
+                      style={styles.loadAvatar} />
+                  ) : (
+                      <Avatar
+                        source={{
+                          uri: user.avatar
+                            ? user.avatar.url
+                            : `https://api.adorable.io/avatars/50/${user.name}.png`,
+                        }}
+                      />
+                    )}
 
-                <Name>{user.name}</Name>
-              </User>
-            )}
-          />
-      </Container>
-    )}
-  </Background>
+                  <Name>{user.name}</Name>
+                </User>
+              )}
+            />
+          </Container>
+        )}
+    </Background>
   );
 }
 

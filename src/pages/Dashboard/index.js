@@ -49,7 +49,7 @@ function Dashboard({ isFocused, navigation }) {
     await loadAppointments();
     setLoading(false);
 
-     // wait(500).then(() => setRefreshing(false)); //nao usar
+    // wait(500).then(() => setRefreshing(false)); //nao usar
   }, [refreshing]);
 
   async function handleCancel(id) {
@@ -67,43 +67,41 @@ function Dashboard({ isFocused, navigation }) {
     );
   }
 
-  console.tron.log(appointments);
-
   return (
     <Background>
-      { loading ? (
-            <SafeAreaView
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Lottie resizeMode="contain" source={Calendar} autoPlay />
-          </SafeAreaView>
+      {loading ? (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Lottie resizeMode="contain" source={Calendar} autoPlay />
+        </SafeAreaView>
       ) : (
-        <Container>
-          <Menu>
-            <IconFA
-              style={{paddingRight: 20}}
-              onPress={() => navigation.openDrawer()}
-              name="bars"
-              color="#fff"
-              size={25}
-            />
-          </Menu>
-          <ScrollView
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
-          <Title>Agendamentos</Title>
-            { !haveAppointment && (
-              <BoxNotAppoint>
-                <Image source={Sad} style={{width: 80, height: 80}}/>
-                <Text>Você não possui nenhum agendamento...</Text>
-              </BoxNotAppoint>
-            )}
+          <Container>
+            <Menu>
+              <IconFA
+                style={{ paddingRight: 20 }}
+                onPress={() => navigation.openDrawer()}
+                name="bars"
+                color="#fff"
+                size={25}
+              />
+            </Menu>
+            <ScrollView
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
+              <Title>Agendamentos</Title>
+              {!haveAppointment && (
+                <BoxNotAppoint>
+                  <Image source={Sad} style={{ width: 80, height: 80 }} />
+                  <Text>Você não possui nenhum agendamento...</Text>
+                </BoxNotAppoint>
+              )}
               <>
                 <List
                   data={appointments}
@@ -113,21 +111,21 @@ function Dashboard({ isFocused, navigation }) {
                   )}
                 />
                 <BoxImage>
-                  <Image source={sino} style={{width: 30, height: 30}}/>
+                  <Image source={sino} style={{ width: 30, height: 30 }} />
                   <Message>Para cancelar seu agendamento</Message>
                   <Message>entre em contato com a Manicure</Message>
                 </BoxImage>
               </>
             </ScrollView>
-      </Container>
-      )}
+          </Container>
+        )}
     </Background>
   );
 }
 
 Dashboard.navigationOptions = {
   tabBarLabel: 'Agendamentos',
-  tabBarIcon: ({tintColor}) => <Icon name="event" size={20} color={tintColor}/>
+  tabBarIcon: ({ tintColor }) => <Icon name="event" size={20} color={tintColor} />
 }
 
 export default withNavigationFocus(Dashboard);

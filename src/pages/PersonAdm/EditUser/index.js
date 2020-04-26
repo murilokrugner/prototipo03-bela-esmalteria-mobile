@@ -26,7 +26,6 @@ export default function EditUser({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  console.log(user);
 
   useEffect(() => {
     setName(user.name);
@@ -47,91 +46,91 @@ export default function EditUser({ navigation }) {
       password: password,
     });
 
-      Alert.alert('Dados do usuário atualizados');
-      setLoading(false);
-      navigation.navigate('DashboardAdm');
-      navigation.openDrawer();
+    Alert.alert('Dados do usuário atualizados');
+    setLoading(false);
+    navigation.navigate('DashboardAdm');
+    navigation.openDrawer();
 
   }
 
   return (
     <Background>
-      { loading ? (
+      {loading ? (
         <ActivityIndicator size="large" color="#FFF" align="center"
-        style={styles.load}/>
+          style={styles.load} />
       ) : (
-        <Container>
-          <Form>
+          <Container>
+            <Form>
 
-          { imageProfile === '' ? (
-            <ActivityIndicator size="small" color="#fff" align="center"
-              style={styles.loadAvatar} />
-          ) : (
-            <Avatar
-              source={{
-              uri: imageProfile.avatar
-              ? imageProfile.avatar.url
-              : `https://api.adorable.io/avatars/50/${user.name}.png`,
-              }}
-            />
-          )}
-          <FormInput
-              icon="person-outline"
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder="Nome do usuário"
-              returnKeyType="next"
-              onSubmitEditing={() => emailRef.current.focus()}
-              value={name}
-              onChangeText={setName}
-            />
+              {imageProfile === '' ? (
+                <ActivityIndicator size="small" color="#fff" align="center"
+                  style={styles.loadAvatar} />
+              ) : (
+                  <Avatar
+                    source={{
+                      uri: imageProfile.avatar
+                        ? imageProfile.avatar.url
+                        : `https://api.adorable.io/avatars/50/${user.name}.png`,
+                    }}
+                  />
+                )}
+              <FormInput
+                icon="person-outline"
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholder="Nome do usuário"
+                returnKeyType="next"
+                onSubmitEditing={() => emailRef.current.focus()}
+                value={name}
+                onChangeText={setName}
+              />
 
-            <FormInput
-              icon="mail-outline"
-              keyboardType="email-address"
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder="E-mail"
-              ref={emailRef}
-              returnKeyType="next"
-              onSubmitEditing={() => phoneRef.current.focus()}
-              value={email}
-              onChangeText={setEmail}
+              <FormInput
+                icon="mail-outline"
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholder="E-mail"
+                ref={emailRef}
+                returnKeyType="next"
+                onSubmitEditing={() => phoneRef.current.focus()}
+                value={email}
+                onChangeText={setEmail}
 
-            />
+              />
 
-            <FormInput
-              icon="mail-outline"
-              keyboardType="numeric"
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder="Telefone/Celular"
-              ref={phoneRef}
-              returnKeyType="next"
-              onSubmitEditing={() => passwordRef.current.focus()}
-              value={phone}
-              onChangeText={setPhone}
-            />
+              <FormInput
+                icon="mail-outline"
+                keyboardType="numeric"
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholder="Telefone/Celular"
+                ref={phoneRef}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordRef.current.focus()}
+                value={phone}
+                onChangeText={setPhone}
+              />
 
-            <Separator />
+              <Separator />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="nova senha"
-              ref={passwordRef}
-              returnKeyType="send"
-              onSubmitEditing={handleSubmit}
-              value={password}
-              onChangeText={setPassword}
+              <FormInput
+                icon="lock-outline"
+                secureTextEntry
+                placeholder="nova senha"
+                ref={passwordRef}
+                returnKeyType="send"
+                onSubmitEditing={handleSubmit}
+                value={password}
+                onChangeText={setPassword}
 
-            />
+              />
 
-          <SubmitButton loading={loading} onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
+              <SubmitButton loading={loading} onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
 
-          </Form>
-      </Container>
-      )}
+            </Form>
+          </Container>
+        )}
 
     </Background>
   );

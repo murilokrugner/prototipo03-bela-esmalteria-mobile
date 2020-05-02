@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-import Button from '~/components/Button';
+import Button from '../../../components/Button';
 
 export const Container = styled.View`
   flex: 1;
@@ -20,7 +20,7 @@ export const Name = styled.Text`
   margin-top: 10px;
   font-size: 20px;
   font-weight: bold;
-  color: #FFF;
+  color: #fff;
 `;
 
 export const Time = styled.Text`

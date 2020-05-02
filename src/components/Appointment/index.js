@@ -14,12 +14,10 @@ export default function Appointment({ data, onCancel }) {
     });
   }, [data.date]);
 
-  console.tron.log(data);
-
   return (
     <Container past={data.past}>
       <Left>
-      <Avatar
+        <Avatar
           source={{
             uri: data.provider.avatar
               ? data.provider.avatar.url

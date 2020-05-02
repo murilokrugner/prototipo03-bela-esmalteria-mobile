@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ActivityIndicator, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import api from '~/services/api';
+import api from '../../../services/api';
 
-import Background from '~/components/Background';
+import Background from '../../../components/Background';
 
-import { Container, ProvidersList, Provider, Avatar, Name } from './styles';
+import {Container, ProvidersList, Provider, Avatar, Name} from './styles';
 
-export default function SelectService({ navigation }) {
+export default function SelectService({navigation}) {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const provider = navigation.getParam('provider');
@@ -27,40 +27,42 @@ export default function SelectService({ navigation }) {
 
   return (
     <Background>
-      { loading ? (
-        <ActivityIndicator size="large" color="#FFF" align="center"
-        style={styles.load}/>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#FFF"
+          align="center"
+          style={styles.load}
+        />
       ) : (
         <Container>
           <ProvidersList
             data={services}
-            keyExtractor={service => String(service.id)}
-            renderItem={({ item: service }) => (
+            keyExtractor={(service) => String(service.id)}
+            renderItem={({item: service}) => (
               <Provider
                 onPress={() =>
-                  navigation.navigate('SelectDateTime', { provider, service })
-                }
-              >
+                  navigation.navigate('SelectDateTime', {provider, service})
+                }>
                 <Name>Tipo: {service.name}</Name>
                 <Name>preço: R$-{service.price},00</Name>
                 <Name>Duração: {service.duration} minutos</Name>
               </Provider>
             )}
           />
-      </Container>
-    )}
-  </Background>
+        </Container>
+      )}
+    </Background>
   );
 }
 
-SelectService.navigationOptions = ({ navigation }) => ({
+SelectService.navigationOptions = ({navigation}) => ({
   title: 'Selecione o serviço',
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('SelectProvider');
-      }}
-    >
+      }}>
       <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
@@ -69,6 +71,6 @@ SelectService.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   load: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-})
+});

@@ -1,9 +1,9 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 
-import Input from '~/components/Input';
-import Button from '~/components/Button';
-import { bold } from 'ansi-colors';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import {bold} from 'ansi-colors';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
@@ -35,7 +35,7 @@ export const SignLink = styled.TouchableOpacity`
 `;
 
 export const SignLinkText = styled.Text`
-color: #fff;
-font-weight: bold;
-font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
 `;

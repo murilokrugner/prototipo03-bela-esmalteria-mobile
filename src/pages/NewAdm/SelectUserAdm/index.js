@@ -3,9 +3,9 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import api from '~/services/api';
+import api from '../../../services/api';
 
-import Background from '~/components/Background';
+import Background from '../../../components/Background';
 
 import { Container, UsersList, User, Avatar, Name } from './styles';
 
@@ -24,44 +24,47 @@ export default function SelectUserAdm({ navigation }) {
     loadUsers();
   }, []);
 
-  console.tron.log(users);
-
   return (
     <Background>
-      { loading ? (
-        <ActivityIndicator size="large" color="#FFF" align="center"
-        style={styles.load}/>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#FFF"
+          align="center"
+          style={styles.load}
+        />
       ) : (
-        <Container>
-          <UsersList
-            data={users}
-            keyExtractor={user => String(user.id)}
-            renderItem={({ item: user }) => (
-              <User
-                onPress={() =>
-                  navigation.navigate('SelectServiceAdm', { user })
-                }
-              >
-                {user.avatar === '' ? (
-                  <ActivityIndicator size="small" color="#000" align="center"
-                  style={styles.loadAvatar} />
-                ): (
-                  <Avatar
-                source={{
-                  uri: user.avatar
-                    ? user.avatar.url
-                    : `https://api.adorable.io/avatars/50/${user.name}.png`,
-                }}
-                />
-                )}
+          <Container>
+            <UsersList
+              data={users}
+              keyExtractor={(user) => String(user.id)}
+              renderItem={({ item: user }) => (
+                <User
+                  onPress={() => navigation.navigate('SelectServiceAdm', { user })}>
+                  {user.avatar === '' ? (
+                    <ActivityIndicator
+                      size="small"
+                      color="#000"
+                      align="center"
+                      style={styles.loadAvatar}
+                    />
+                  ) : (
+                      <Avatar
+                        source={{
+                          uri: user.avatar
+                            ? user.avatar.url
+                            : `https://api.adorable.io/avatars/50/${user.name}.png`,
+                        }}
+                      />
+                    )}
 
-                <Name>{user.name}</Name>
-              </User>
-            )}
-          />
-      </Container>
-    )}
-  </Background>
+                  <Name>{user.name}</Name>
+                </User>
+              )}
+            />
+          </Container>
+        )}
+    </Background>
   );
 }
 
@@ -71,8 +74,7 @@ SelectUserAdm.navigationOptions = ({ navigation }) => ({
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('DashboardAdm');
-      }}
-    >
+      }}>
       <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
@@ -81,11 +83,11 @@ SelectUserAdm.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   load: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loadAvatar: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-  }
-})
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+});

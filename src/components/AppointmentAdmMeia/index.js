@@ -11,7 +11,7 @@ import { bold } from 'ansi-colors';
 
 import api from '../../services/api';
 
-export default function AppointmentAdm({ data, onCancel }) {
+export default function AppointmentAdmMeia({ data, onCancel }) {
   /*const dateParsed = useMemo(() => {
     return formatRelative(parseISO(data.date), new Date(), {
       locale: pt,
@@ -21,26 +21,26 @@ export default function AppointmentAdm({ data, onCancel }) {
 
 
   return (
-    <Container past={data.past}>
+    <Container past={data.pastMeia}>
       <Left>
         <Info available={data.available}>
           <Avatar
             source={{
-              uri: data.appointment
-                ? data.appointment.user.avatar.url
+              uri: data.appointmentMeia
+                ? data.appointmentMeia.user.avatar.url
                 : `https://api.adorable.io/avatars/50/murilo.png`
             }}
           />
           <Content>
-            <Name>{data.appointment ? data.appointment.user.name : 'Horário Disponível'}</Name>
-            <Name>{data.appointment ? 'Serviço: ' + data.appointment.service.name : ''}</Name>
-            <Time>Horário: {data.time}</Time>
+            <Name>{data.appointmentMeia ? data.appointmentMeia.user.name : 'Horário Disponível'}</Name>
+            <Name>{data.appointmentMeia ? 'Serviço: ' + data.appointmentMeia.service.name : ''}</Name>
+            <Time>Horário: {data.timeMeia}</Time>
           </Content>
         </Info>
       </Left>
 
-      {data.appointment && !data.past && !data.canceled_at && (
-        <TouchableOpacity onPress={onCancel} style={{ flex: 1, marginTop: 100, justifyContent: 'center', alignItems: 'center', width: 130 }}>
+      {data.appointmentMeia && !data.pastMeia && !data.canceled_at && (
+        <TouchableOpacity style={{ flex: 1, marginTop: 100, justifyContent: 'center', alignItems: 'center', width: 130 }} onPress={onCancel}>
           <Icon name="event-busy" size={30} color="#f64c75" />
         </TouchableOpacity>
       )}

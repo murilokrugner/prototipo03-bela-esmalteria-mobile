@@ -8,6 +8,7 @@ export const Menu = styled.View`
 
 export const Container = styled.SafeAreaView`
   flex: 1;
+
 `;
 
 export const Title = styled.Text`
@@ -20,5 +21,11 @@ export const Title = styled.Text`
 
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 30 }
+  contentContainerStyle: { flex: 1, justifyContent: 'center', alignItems: 'center' }
 })``;
+
+export const BoxList = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+`;

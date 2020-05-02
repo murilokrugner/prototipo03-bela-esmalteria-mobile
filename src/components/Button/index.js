@@ -24,3 +24,4 @@ Button.propTypes = {
 Button.defaultProps = {
   loading: false,
 }
+

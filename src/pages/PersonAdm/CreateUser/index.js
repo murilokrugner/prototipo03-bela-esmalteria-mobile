@@ -1,15 +1,23 @@
-import React, { useRef, useState } from 'react';
-import { CheckBox } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {CheckBox} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '../../../components/Background';
-import { useDispatch, useSelector } from 'react-redux';
-import { signUpRequest } from '~/store/modules/auth/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {signUpRequest} from '../../../store/modules/auth/actions';
 
-import { Container, Header, Form, FormInput, SubmitButton, Box, TBox } from './styles';
+import {
+  Container,
+  Header,
+  Form,
+  FormInput,
+  SubmitButton,
+  Box,
+  TBox,
+} from './styles';
 
-export default function CreateUser({ navigation }) {
+export default function CreateUser({navigation}) {
   const dispatch = useDispatch();
 
   const emailRef = useRef();
@@ -22,7 +30,7 @@ export default function CreateUser({ navigation }) {
   const [password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
 
-  const loading = useSelector(state => state.auth.loading);
+  const loading = useSelector((state) => state.auth.loading);
 
   async function handleSubmit() {
     const provider = checked;
@@ -84,32 +92,27 @@ export default function CreateUser({ navigation }) {
 
           <Box>
             <TBox>Prestador de serviço?</TBox>
-            <CheckBox
-              value={checked}
-              onValueChange={setChecked}
-            />
+            <CheckBox value={checked} onValueChange={setChecked} />
           </Box>
 
-          <SubmitButton loading={loading} onPress={handleSubmit}>Cadastrar</SubmitButton>
+          <SubmitButton loading={loading} onPress={handleSubmit}>
+            Cadastrar
+          </SubmitButton>
         </Form>
       </Container>
     </Background>
   );
 }
 
-CreateUser.navigationOptions = ({ navigation }) => ({
+CreateUser.navigationOptions = ({navigation}) => ({
   /**title: 'Criar novo usuário',**/
   headerLeft: () => (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('DashboardAdm');
         navigation.openDrawer();
-      }}
-    >
+      }}>
       <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
 });
-
-
-

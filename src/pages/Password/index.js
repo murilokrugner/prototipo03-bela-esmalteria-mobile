@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
-import { Image } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import {Image} from 'react-native';
+import {useDispatch} from 'react-redux';
 
-import logo from '~/assets/logo.jpg';
+import logo from '../../assets/logo.jpg';
 
-import Background from '~/components/Background';
+import Background from '../../components/Background';
 
-import { recoverPasswordRequest } from '~/store/modules/password/actions';
+import {recoverPasswordRequest} from '../../store/modules/password/actions';
 
-import { Container, Form, FormInput, SubmitButton, SignLink, SignLinkText } from './styles';
+import {
+  Container,
+  Form,
+  FormInput,
+  SubmitButton,
+  SignLink,
+  SignLinkText,
+} from './styles';
 
-export default function SignIn({ navigation }) {
+export default function SignIn({navigation}) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
 
@@ -21,7 +28,7 @@ export default function SignIn({ navigation }) {
   return (
     <Background>
       <Container>
-        <Image source={logo} style={{width: 200, height: 200}}/>
+        <Image source={logo} style={{width: 200, height: 200}} />
 
         <Form>
           <FormInput
@@ -39,7 +46,10 @@ export default function SignIn({ navigation }) {
           <SubmitButton onPress={handleSubmit}>Enviar</SubmitButton>
         </Form>
 
-        <SignLink onPress={() => {navigation.navigate('SignIn')}}>
+        <SignLink
+          onPress={() => {
+            navigation.navigate('SignIn');
+          }}>
           <SignLinkText>Lembrei minha senha</SignLinkText>
         </SignLink>
       </Container>

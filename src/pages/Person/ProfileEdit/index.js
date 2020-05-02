@@ -1,19 +1,29 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Background from '~/components/Background';
-import { updateProfileRequest } from '~/store/modules/user/actions';
+import Background from '../../../components/Background';
+import { updateProfileRequest } from '../../../store/modules/user/actions';
 
-import { Container, Title, Image, Avatar, Separator, Form, FormInput, SubmitButton, LogoutButton } from './styles';
-import api from '~/services/api';
+import {
+  Container,
+  Title,
+  Image,
+  Avatar,
+  Separator,
+  Form,
+  FormInput,
+  SubmitButton,
+  LogoutButton,
+} from './styles';
+import api from '../../../services/api';
 
 export default function ProfileEdit({ navigation }) {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.profile);
+  const profile = useSelector((state) => state.user.profile);
 
   const emailRef = useRef();
   const nameRef = useRef();
@@ -81,6 +91,8 @@ export default function ProfileEdit({ navigation }) {
 
     data.append('file', imageData);
 
+    Alert.alert('chegou aqui');
+
     const response = await api.post('files', data);
 
     const { id, url } = response.data;
@@ -100,15 +112,17 @@ export default function ProfileEdit({ navigation }) {
     }))
   }
 
+
   function handleSubmit() {
     setLoading(true);
-    dispatch(updateProfileRequest({
+    dispatch(
+      updateProfileRequest({
         name,
         email,
         oldPassword,
         password,
         confirmPassword,
-      })
+      }),
     );
     setLoading(false);
     navigation.navigate('Dashboard');
@@ -117,97 +131,101 @@ export default function ProfileEdit({ navigation }) {
 
   return (
     <Background>
-      { loading ? (
-        <ActivityIndicator size="large" color="#FFF" align="center"
-        style={styles.load}/>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#FFF"
+          align="center"
+          style={styles.load}
+        />
       ) : (
-        <Container>
-          <Form>
-          <Image
-            onPress={showImagePicker}
-            >
-              Alterar foto
-          </Image>
-          { loadingAvatar ? (
-            <ActivityIndicator size="small" color="#fff" align="center"
-              style={styles.loadAvatar} />
-          ) : (
-            <Avatar
-              source={{
-              uri: profile.avatar
-              ? profile.avatar.url
-              : `https://api.adorable.io/avatars/50/${profile.name}.png`,
-              }}
-            />
-          )}
-          <FormInput
-              icon="person-outline"
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder="Digite seu nome completo"
-              returnKeyType="next"
-              onSubmitEditing={() => emailRef.current.focus()}
-              value={name}
-              onChangeText={setName}
-            />
+          <Container>
+            <Form>
+              <Image onPress={showImagePicker}>Alterar foto</Image>
+              {loadingAvatar ? (
+                <ActivityIndicator
+                  size="small"
+                  color="#fff"
+                  align="center"
+                  style={styles.loadAvatar}
+                />
+              ) : (
+                  <Avatar
+                    source={{
+                      uri: profile.avatar
+                        ? profile.avatar.url
+                        : `https://api.adorable.io/avatars/50/${profile.name}.png`,
+                    }}
+                  />
+                )}
+              <FormInput
+                icon="person-outline"
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholder="Digite seu nome completo"
+                returnKeyType="next"
+                onSubmitEditing={() => emailRef.current.focus()}
+                value={name}
+                onChangeText={setName}
+              />
 
-            <FormInput
-              icon="mail-outline"
-              keyboardType="email-address"
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder="Digite seu e-mail"
-              ref={emailRef}
-              returnKeyType="next"
-              onSubmitEditing={() => OldpasswordRef.current.focus()}
-              value={email}
-              onChangeText={setEmail}
-            />
+              <FormInput
+                icon="mail-outline"
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholder="Digite seu e-mail"
+                ref={emailRef}
+                returnKeyType="next"
+                onSubmitEditing={() => OldpasswordRef.current.focus()}
+                value={email}
+                onChangeText={setEmail}
+              />
 
-            <Separator />
+              <Separator />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Sua senha atual"
-              ref={oldPasswordRef}
-              returnKeyType="next"
-              onSubmitEditing={() => passwordRef.current.focus()}
-              returnKeyType="send"
-              onSubmitEditing={handleSubmit}
-              value={oldPassword}
-              onChangeText={setOldPassword}
-            />
+              <FormInput
+                icon="lock-outline"
+                secureTextEntry
+                placeholder="Sua senha atual"
+                ref={oldPasswordRef}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordRef.current.focus()}
+                returnKeyType="send"
+                onSubmitEditing={handleSubmit}
+                value={oldPassword}
+                onChangeText={setOldPassword}
+              />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Sua nova senha"
-              ref={passwordRef}
-              returnKeyType="next"
-              onSubmitEditing={() => confirmPasswordRef.current.focus()}
-              onSubmitEditing={handleSubmit}
-              value={password}
-              onChangeText={setPassword}
-            />
+              <FormInput
+                icon="lock-outline"
+                secureTextEntry
+                placeholder="Sua nova senha"
+                ref={passwordRef}
+                returnKeyType="next"
+                onSubmitEditing={() => confirmPasswordRef.current.focus()}
+                onSubmitEditing={handleSubmit}
+                value={password}
+                onChangeText={setPassword}
+              />
 
-            <FormInput
-              icon="lock-outline"
-              secureTextEntry
-              placeholder="Confirmação de senha"
-              ref={confirmPasswordRef}
-              returnKeyType="send"
-              onSubmitEditing={handleSubmit}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
+              <FormInput
+                icon="lock-outline"
+                secureTextEntry
+                placeholder="Confirmação de senha"
+                ref={confirmPasswordRef}
+                returnKeyType="send"
+                onSubmitEditing={handleSubmit}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
 
-          <SubmitButton loading={loading} onPress={handleSubmit}>Atualizar Perfil</SubmitButton>
-
-          </Form>
-      </Container>
-      )}
-
+              <SubmitButton loading={loading} onPress={handleSubmit}>
+                Atualizar Perfil
+            </SubmitButton>
+            </Form>
+          </Container>
+        )}
     </Background>
   );
 }
@@ -219,8 +237,7 @@ ProfileEdit.navigationOptions = ({ navigation }) => ({
       onPress={() => {
         navigation.navigate('Dashboard');
         navigation.openDrawer();
-      }}
-    >
+      }}>
       <Icon name="chevron-left" size={20} color="#fff" />
     </TouchableOpacity>
   ),
@@ -229,12 +246,12 @@ ProfileEdit.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   load: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loadAvatar: {
     flex: 1,
     padding: 100,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-  }
-})
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+});
